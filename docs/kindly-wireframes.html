@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kindly Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Wrapper document ---------- */
+  :root {
+    --page: #1C1E22;
+    --page-text: #E6E6E6;
+    --page-muted: #9AA0A8;
+    --page-line: #33363C;
+    --note: #FFB86B;
+    --brand: #3D7BD9;      /* Kindly calm blue: never changes, in any act */
+    --brand-2: #2A5FB0;
+    /* fixed team colors (same in every act; desaturated in Acts 3-4) */
+    --t-product: #4C6EF5; --t-growth: #2E9E6A; --t-support: #E0A030;
+    --t-tns: #8E5BD0; --t-sales: #E0577A; --t-ads: #C2410C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--page); color: var(--page-text);
+    font-family: 'Nunito', system-ui, sans-serif; line-height: 1.45;
+    overflow-x: hidden;
+  }
+  code { font-family: 'JetBrains Mono', monospace; font-size: .85em; }
+  .page-header { max-width: 1280px; margin: 0 auto; padding: 56px 16px 8px; }
+  .page-header h1 { font-size: 2.2rem; font-weight: 800; }
+  .page-header h1 span { color: var(--brand); }
+  .page-header p { color: var(--page-muted); margin-top: 6px; max-width: 820px; }
+  .page-header .changes { margin-top: 14px; color: var(--page-muted); font-size: .9rem; max-width: 820px; padding-left: 18px; display: grid; gap: 3px; }
+  .page-header .changes b { color: var(--page-text); }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .toc a {
+    font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--page-text);
+    text-decoration: none; border: 1px solid var(--page-line); border-radius: 999px; padding: 4px 10px;
+  }
+  .toc a:hover { border-color: var(--brand); }
+
+  section.wf { max-width: 1280px; margin: 0 auto; padding: 36px 16px; }
+  .label {
+    font-family: 'JetBrains Mono', monospace; font-size: .72rem; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--note); margin-bottom: 6px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .label::after { content: ''; flex: 1; height: 1px; background: var(--page-line); }
+  section.wf h2 { font-size: 1.35rem; font-weight: 800; margin-bottom: 4px; }
+  .sub { color: var(--page-muted); margin-bottom: 16px; font-size: .95rem; max-width: 900px; }
+  .notes { margin-top: 14px; display: grid; gap: 6px; font-size: .88rem; color: var(--page-muted); }
+  .notes li { list-style: none; padding-left: 26px; position: relative; }
+  .notes li b { color: var(--page-text); }
+  .notes .n {
+    position: absolute; left: 0; top: 1px; width: 18px; height: 18px; border-radius: 50%;
+    background: var(--note); color: #1C1E22; font: 700 .68rem/18px 'JetBrains Mono', monospace; text-align: center;
+  }
+  .pin {
+    display: inline-block; width: 18px; height: 18px; border-radius: 50%; background: var(--note);
+    color: #1C1E22; font: 700 .68rem/18px 'JetBrains Mono', monospace; text-align: center;
+    vertical-align: middle; margin-left: 4px; flex: none; text-decoration: none; text-transform: none; letter-spacing: 0;
+  }
+  .pin.abs { position: absolute; top: 10px; right: 10px; margin: 0; z-index: 2; }
+  .row { display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start; }
+  .row > * { flex: 1 1 360px; min-width: 0; }
+  .caption { font: 600 .72rem 'JetBrains Mono', monospace; color: var(--page-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .1em; }
+
+  /* ---------- Game frame + act palettes ---------- */
+  /* Act 1 (default): calm blue */
+  .frame {
+    --bg: #F1F6FB; --card: #FFFFFF; --ink: #1F2A37; --muted: #6B7A8C; --line: #DCE6F0;
+    --accent: #3D7BD9; --accent-soft: #E3EEFB; --good: #2E9E6A; --bad: #C8463D; --warn: #E0A030;
+    --loss: #E0A030; --alert-bg: #FFF6E5; --btn-shadow: rgba(0,0,0,.18);
+    background: var(--bg); color: var(--ink); border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--page-line); box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    font-size: 13px; position: relative;
+  }
+  /* Act 2: red, loud, salesy. Good/bad use arrows + dark green / dark maroon. */
+  .act2 {
+    --bg: #FCEBEA; --card: #FFF7F6; --ink: #3A1D1B; --muted: #8A5650; --line: #F0CCC8;
+    --accent: #D7263D; --accent-soft: #F9D6DA; --good: #1E6B3C; --bad: #7A1626; --warn: #B5651D;
+    --loss: #D7263D; --alert-bg: #FDE0DC; --btn-shadow: #8E1426;
+  }
+  .act2 .topbar { border-bottom: 3px solid var(--accent); }
+  .act2 .card h4 { color: var(--accent); font-weight: 800; }
+  .act2 .big-btn { text-transform: uppercase; letter-spacing: .05em; font-size: 19px; }
+  .act2 .tabs a.on { text-decoration-color: var(--accent); }
+  /* Act 3: gray (unchanged) */
+  .act3 { --bg: #E8E9EB; --card: #F5F5F6; --ink: #3A3D42; --muted: #6F737A; --line: #D3D5D9; --accent: #7A8494; --accent-soft: #E1E3E7; --good: #6F9A82; --bad: #B4656A; --warn: #B8955A; --loss: #B4656A; --alert-bg: #ECE6DC; }
+  .act3 .dots, .act3 .legend, .act3 .sw { filter: saturate(.3); }
+  /* Act 4: monochrome (unchanged) */
+  .act4 { --bg: #D6D6D6; --card: #E4E4E4; --ink: #444; --muted: #6E6E6E; --line: #BDBDBD; --accent: #8A8A8A; --accent-soft: #D0D0D0; --good: #8A8A8A; --bad: #6A6A6A; --warn: #8A8A8A; --loss: #8A8A8A; }
+  .act4 .dots { filter: saturate(0); }
+  /* Founder panel in Act 4: still Act 1 blue */
+  .founder-live {
+    --card: #FFFFFF; --ink: #1F2A37; --muted: #6B7A8C; --line: #DCE6F0; --accent: #3D7BD9; --accent-soft: #E3EEFB; --good: #2E9E6A;
+    border: 2px solid var(--accent) !important; color: var(--ink); background: var(--card) !important;
+  }
+
+  .chrome { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: rgba(0,0,0,.06); }
+  .chrome i { width: 10px; height: 10px; border-radius: 50%; background: rgba(0,0,0,.15); }
+  .chrome span { margin-left: 10px; font: 500 11px 'JetBrains Mono', monospace; color: var(--muted); }
+
+  .topbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--card); gap: 12px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 18px; color: var(--brand); }
+  .logo .mark {
+    width: 26px; height: 26px; border-radius: 8px; background: var(--brand); color: #fff;
+    display: grid; place-items: center; font-size: 15px; font-weight: 800;
+    box-shadow: 0 2px 0 var(--brand-2);
+  }
+  .topbar .meta { color: var(--muted); font-size: 12px; display: flex; gap: 14px; flex-wrap: wrap; }
+
+  /* Location tabs, A Dark Room style: text only, " | " separators, active underlined */
+  .tabs { display: flex; flex-wrap: wrap; align-items: baseline; row-gap: 6px; padding: 12px 16px 10px; font-size: 14px; border-bottom: 1px solid var(--line); }
+  .tabs a { color: var(--muted); text-decoration: none; font-weight: 600; white-space: nowrap; }
+  .tabs a + a::before { content: '|'; display: inline-block; margin: 0 10px; color: var(--line); font-weight: 400; }
+  .tabs a.on { color: var(--ink); font-weight: 800; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+  .tabs a.new::after { content: ' •'; color: var(--accent); }
+  .tabs a.soldtab { color: var(--muted); opacity: .75; }
+  .tabs a.soldtab s { text-decoration-thickness: 1.5px; }
+  .tabs .soldtag { font: 700 9px 'JetBrains Mono', monospace; text-transform: uppercase; border: 1px solid var(--muted); border-radius: 4px; padding: 0 4px; margin-left: 5px; vertical-align: 2px; }
+  .tabs a.lifetab { color: var(--brand); font-weight: 800; }
+
+  .promo { background: var(--accent); color: #fff; font: 800 12px 'Nunito'; text-transform: uppercase; letter-spacing: .08em; padding: 7px 16px; display: flex; gap: 14px; flex-wrap: wrap; justify-content: space-between; }
+
+  .dash { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 12px; padding: 12px; }
+  .dash.two { grid-template-columns: 1.2fr 1fr; }
+  .col { display: grid; gap: 12px; align-content: start; min-width: 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; position: relative; min-width: 0; }
+  .card h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .card h4 .q, .q { width: 16px; height: 16px; border-radius: 50%; border: 1px solid var(--line); display: inline-grid; place-items: center; font-size: 10px; color: var(--muted); text-transform: none; vertical-align: middle; }
+
+  .big-btn {
+    width: 100%; border: 0; border-radius: 14px; padding: 18px 10px; cursor: default; display: block; text-align: center;
+    background: var(--accent); color: #fff; font: 800 18px 'Nunito', sans-serif;
+    box-shadow: 0 4px 0 var(--btn-shadow);
+  }
+  .big-btn.disabled { background: #BFBFBF; color: #7C7C7C; box-shadow: none; position: relative; }
+  .stat { font-size: 28px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .stat small { font-size: 12px; font-weight: 600; color: var(--muted); }
+  .rate { font-weight: 700; font-size: 12px; margin: 2px 0 10px; }
+  .kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-variant-numeric: tabular-nums; }
+  .kv > span { color: var(--muted); }
+  .kv b.pos, .pos { color: var(--good); } .kv b.neg, .neg { color: var(--bad); }
+  .split { display: flex; gap: 10px; margin-top: 8px; }
+  .split div { flex: 1; background: var(--accent-soft); border-radius: 8px; padding: 6px 8px; }
+  .split div b { display: block; font-size: 16px; }
+  .split div span { color: var(--muted); font-size: 11px; }
+
+  .gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .gauge { text-align: center; }
+  .gauge svg { width: 100%; max-width: 150px; height: auto; display: block; margin: 0 auto; }
+  .gauge .gv { font-weight: 800; font-size: 18px; margin-top: -6px; }
+  .gauge .gl { font-size: 11px; color: var(--muted); }
+  .gauge.dark svg, .gauge.dark .gv { opacity: .18; }
+  .gauge.dark .gl::after { content: ' · not reported'; }
+
+  .upg { display: grid; gap: 6px; }
+  .u { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .u b { display: block; font-size: 13px; }
+  .u span { color: var(--muted); font-size: 11px; }
+  .u .cost { font-weight: 700; white-space: nowrap; font-size: 12px; color: var(--ink); }
+  .u.buy { border-color: var(--accent); background: var(--accent-soft); }
+  .u.locked { opacity: .45; }
+  .u.owned { opacity: .7; }
+  .badge { display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: .05em; padding: 1px 6px; border-radius: 999px; margin-left: 4px; vertical-align: middle; }
+  .badge.plus { background: #FFE9A8; color: #6B4E00; }
+  .badge.board { background: #2B2B2B; color: #fff; }
+  .badge.honest { background: #DDF5E7; color: #1E6B3C; }
+  .badge.hot { background: var(--accent); color: #fff; }
+
+  /* Small buttons */
+  .sbtn { display: inline-block; border-radius: 10px; padding: 8px 12px; font: 800 13px 'Nunito'; background: var(--accent); color: #fff; text-align: center; white-space: nowrap; box-shadow: 0 2px 0 var(--btn-shadow); }
+  .sbtn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); box-shadow: none; }
+  .sbtn.off { background: var(--line); color: var(--muted); box-shadow: none; }
+  .sbtn.warnb { background: var(--warn); }
+
+  /* Support inbox + outage alert */
+  .inbox-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .inbox-head .count { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .inbox-head .count small { font-size: 12px; color: var(--muted); font-weight: 600; }
+  .ticket { border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; font-size: 12px; margin-top: 6px; }
+  .ticket .h { color: var(--muted); font-size: 11px; display: block; }
+  .alert { border: 1.5px solid var(--warn); background: var(--alert-bg); border-radius: 12px; padding: 12px; position: relative; }
+  .alert .t { font-weight: 800; font-size: 14px; }
+  .pips { display: flex; gap: 3px; margin: 8px 0; }
+  .pips i { flex: 1; height: 8px; border-radius: 3px; background: var(--line); }
+  .pips i.f { background: var(--warn); }
+
+  /* Money chart */
+  .chart svg { width: 100%; height: auto; display: block; margin-top: 4px; }
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 10.5px; color: var(--muted); margin-top: 4px; }
+  .legend > span { display: inline-flex; align-items: center; }
+  .legend i { display: inline-block; width: 14px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 4px; }
+  .legend i.lndash { border-top-style: dashed; }
+  .legend i.box { width: 10px; height: 10px; border: 0; border-radius: 2px; vertical-align: -1px; }
+
+  /* Team assignment */
+  .team-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+  .team-top .count { font-size: 18px; font-weight: 800; }
+  .team-row { display: grid; grid-template-columns: 10px 1fr auto; gap: 10px; align-items: center; padding: 9px 4px; border-bottom: 1px dashed var(--line); position: relative; }
+  .team-row:last-of-type { border-bottom: 0; }
+  .sw { width: 10px; height: 10px; border-radius: 50%; }
+  .team-row b { display: block; font-size: 13px; }
+  .team-row .eff { color: var(--muted); font-size: 11.5px; display: block; }
+  .team-row .eff em { font-style: normal; color: var(--ink); font-weight: 700; }
+  .team-row.locked { opacity: .45; }
+  .team-row.hi { background: rgba(184,149,90,.2); outline: 2px solid var(--warn); border-radius: 8px; margin: 3px 0; border-bottom: 0; }
+  .stepper { display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+  .stepper .pm { width: 26px; height: 26px; border: 1px solid var(--line); background: var(--card); border-radius: 7px; display: grid; place-items: center; font-weight: 800; font-size: 14px; }
+  .stepper .pm.nudge { border-color: var(--warn); box-shadow: 0 0 0 3px rgba(184,149,90,.45); }
+  .stepper .pm.dim { opacity: .35; }
+  .stepper b { min-width: 34px; text-align: center; font-size: 14px; }
+  .dots { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 6px; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+  .dots i.idle { background: transparent; border: 1.5px solid var(--ink); }
+  .dots i.gone { background: transparent; border: 1px dashed var(--muted); }
+  .legend .sw { display: inline-block; width: 8px; height: 8px; margin-right: 4px; vertical-align: 0; }
+
+  /* Levers */
+  .lever { padding: 10px 0 12px; border-bottom: 1px dashed var(--line); }
+  .lever:last-child { border-bottom: 0; }
+  .lv-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+  .lv-head b { font-size: 13px; }
+  .lv-head .val { font-weight: 800; color: var(--accent); }
+  .steps { display: grid; grid-template-columns: repeat(var(--n), 1fr); position: relative; margin-top: 8px; }
+  .steps::before { content: ''; position: absolute; top: 7px; height: 3px; border-radius: 2px; background: var(--line); left: calc(50% / var(--n)); right: calc(50% / var(--n)); }
+  .steps span { position: relative; text-align: center; font-size: 10.5px; color: var(--muted); padding-top: 20px; line-height: 1.15; overflow-wrap: anywhere; }
+  .steps span::before { content: ''; position: absolute; top: 3px; left: 50%; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: var(--card); border: 2px solid var(--line); box-sizing: border-box; }
+  .steps span.on { color: var(--ink); font-weight: 800; }
+  .steps span.on::before { width: 19px; height: 19px; margin-left: -9.5px; top: -1px; background: var(--accent); border: 3px solid var(--card); box-shadow: 0 0 0 1.5px var(--accent); }
+  .fx { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 11.5px; margin-top: 8px; }
+  .fx .now { font-weight: 700; }
+  .fx .later { color: var(--muted); }
+  .lever.locked .lv-head, .lever.locked .steps, .lever.locked .later { opacity: .45; }
+  .lever.locked .steps span.on::before { background: var(--muted); box-shadow: 0 0 0 1.5px var(--muted); }
+
+  /* A/B tests */
+  .test-title { font-weight: 800; font-size: 14px; margin-bottom: 2px; }
+  .test-from { font-size: 11px; color: var(--muted); margin-bottom: 10px; }
+  .variants { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .variant { border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: grid; gap: 8px; align-content: start; }
+  .variant .vl { font: 700 10px 'JetBrains Mono', monospace; color: var(--muted); }
+  .variant .mock { background: #fff; border: 1px solid #E3E3E3; border-radius: 8px; padding: 12px 8px; text-align: center; min-height: 64px; display: grid; place-items: center; }
+  .variant .pred { font-size: 11.5px; }
+  .mock .mbtn { background: #3D7BD9; color: #fff; font: 700 12px 'Nunito'; padding: 7px 12px; border-radius: 8px; }
+  .mock .mlink { color: #9A9A9A; font-size: 10px; text-decoration: underline; }
+  .hist { list-style: none; display: grid; gap: 0; }
+  .hist li { display: grid; grid-template-columns: 34px 1fr auto; gap: 8px; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 12px; align-items: baseline; }
+  .hist li:last-child { border-bottom: 0; }
+  .hist .id { font: 600 11px 'JetBrains Mono', monospace; color: var(--muted); }
+  .hist .res { font-weight: 700; white-space: nowrap; font-size: 11.5px; }
+  .hist .act1t { color: var(--muted); }
+
+  /* Market */
+  .share { display: flex; height: 26px; border-radius: 7px; overflow: hidden; margin-top: 6px; font: 800 11px 'Nunito'; color: #fff; }
+  .share i { display: grid; place-items: center; font-style: normal; }
+  .rival { display: flex; gap: 12px; align-items: center; }
+  .rival .rlogo { width: 44px; height: 44px; border-radius: 12px; background: #6B4FA0; color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 22px; flex: none; }
+  .past { display: flex; justify-content: space-between; gap: 10px; padding: 7px 0; border-bottom: 1px dashed var(--line); font-size: 12px; flex-wrap: wrap; }
+  .past:last-child { border-bottom: 0; }
+  .past s { color: var(--muted); }
+
+  .feed { display: grid; gap: 8px; }
+  .post { display: flex; gap: 8px; }
+  .av { width: 26px; height: 26px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 800; font-size: 11px; color: #fff; }
+  .post p { font-size: 12.5px; }
+  .post p .h { color: var(--muted); font-size: 11px; display: block; }
+  .post.biz .av { border-radius: 6px; }
+
+  .memo { border-left: 3px solid var(--accent); padding: 4px 0 4px 10px; }
+  .memo .from { font-size: 11px; color: var(--muted); }
+  .memo p { font-size: 12.5px; margin-top: 2px; }
+  .memo .target { margin-top: 6px; font-size: 11.5px; background: var(--accent-soft); border-radius: 6px; padding: 4px 8px; display: inline-block; font-weight: 700; }
+  .memo.big { border-left-width: 5px; padding: 8px 0 8px 14px; }
+  .memo.big p { font-size: 14px; font-weight: 700; }
+
+  .bar { height: 8px; border-radius: 999px; background: var(--accent-soft); overflow: hidden; margin-top: 4px; }
+  .bar i { display: block; height: 100%; background: var(--accent); }
+  .bar.fifty { position: relative; }
+  .bar.fifty::after { content: ''; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px; background: var(--ink); opacity: .35; }
+  .control { margin-top: 8px; font-weight: 700; }
+
+  .life { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .life span { border: 1px solid var(--line); border-radius: 8px; padding: 3px 7px; font-size: 11px; }
+  .life span.own { background: var(--accent-soft); border-color: transparent; font-weight: 700; }
+  .life span.lock { opacity: .4; }
+
+  .ticker { border-top: 1px solid var(--line); background: var(--card); padding: 8px 12px; display: flex; gap: 10px; align-items: center; overflow: hidden; white-space: nowrap; }
+  .ticker .tag { font: 700 10px 'JetBrains Mono', monospace; background: var(--ink); color: var(--card); padding: 2px 6px; border-radius: 4px; flex: none; }
+  .ticker .items { overflow: hidden; text-overflow: ellipsis; color: var(--ink); }
+  .ticker .items em { font-style: normal; color: var(--muted); margin: 0 10px; }
+  .ticker .owner { white-space: nowrap; font: 600 8.5px 'JetBrains Mono', monospace; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; margin-left: 6px; vertical-align: 1px; text-transform: uppercase; letter-spacing: .04em; }
+  .ticker.wrap { white-space: normal; align-items: flex-start; }
+  .ticker.wrap .items { line-height: 1.7; }
+
+  /* Morale + perks */
+  .morale { display: grid; grid-template-columns: 120px 1fr; gap: 12px; align-items: center; }
+  .morale .gauge svg { max-width: 120px; }
+  .u.cut { opacity: .6; }
+  .u.cut b s, .u.cut .cost s { text-decoration-thickness: 1.5px; }
+  .cuttag { display: block; font: 700 9.5px 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .04em; color: var(--bad); margin-top: 2px; }
+  .seat { display: flex; justify-content: space-between; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: 12px; }
+  .seat:last-of-type { border-bottom: 0; }
+  .seat span { color: var(--muted); }
+
+  .sold {
+    background: repeating-linear-gradient(-45deg, #CACACA, #CACACA 8px, #C4C4C4 8px, #C4C4C4 16px);
+    border: 1px solid #B5B5B5; border-radius: 12px; min-height: 90px; display: grid; place-items: center; position: relative; color: #8a8a8a;
+  }
+  .stamp {
+    border: 3px solid #8A3434; color: #8A3434; font: 800 14px 'JetBrains Mono', monospace; letter-spacing: .12em;
+    padding: 4px 10px; border-radius: 6px; transform: rotate(-8deg); background: rgba(255,255,255,.35); text-transform: uppercase;
+  }
+  .sold small { position: absolute; bottom: 6px; left: 10px; font-size: 10px; color: #666; }
+
+  /* Modals: drawn in normal flow so tall modals never get clipped */
+  .overlay { background: rgba(20,30,45,.38); display: grid; place-items: center; padding: 40px 16px; min-height: 420px; }
+  .act2 .overlay { background: rgba(70,15,20,.35); }
+  .act3 .overlay { background: rgba(30,30,32,.42); }
+  .modal { background: var(--card); border-radius: 16px; padding: 20px; width: 100%; max-width: 460px; box-shadow: 0 20px 60px rgba(0,0,0,.3); position: relative; }
+  .modal h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+  .modal .lede { color: var(--muted); margin-bottom: 12px; }
+  .modal .kicker { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+  .btns { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; align-items: center; }
+  .btn { flex: 1; border-radius: 10px; padding: 10px; font: 800 13px 'Nunito'; border: 1px solid var(--line); background: var(--card); color: var(--ink); text-align: center; min-width: 120px; }
+  .btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
+  .btn.huge { padding: 16px; font-size: 17px; box-shadow: 0 4px 0 var(--btn-shadow); }
+  .btn.trust { background: #2E9E6A; color: #fff; border-color: transparent; }
+  .quiet { font-size: 11px; color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+  .fine { font-size: 10.5px; color: var(--muted); margin-top: 6px; }
+  .amend { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; }
+  .amend .ah { font-size: 12px; font-weight: 800; }
+  .radio { display: grid; grid-template-columns: 16px 1fr; gap: 8px; align-items: start; padding: 7px 0; font-size: 12.5px; }
+  .radio .o { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--muted); margin-top: 2px; }
+  .radio.sel .o { border: 4px solid var(--accent); }
+  .radio .d { display: block; font-size: 11px; color: var(--muted); }
+  .radio.legal { font-family: 'Times New Roman', Georgia, serif; font-size: 10.5px; color: var(--muted); line-height: 1.3; }
+  .unlocks { list-style: none; display: grid; gap: 6px; margin-top: 6px; font-size: 12.5px; }
+  .unlocks li { padding-left: 14px; position: relative; }
+  .unlocks li::before { content: '•'; position: absolute; left: 2px; color: var(--accent); font-weight: 800; }
+  .unlocks .eff { color: var(--muted); }
+  .choice { border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; margin-top: 8px; display: grid; gap: 2px; background: var(--card); position: relative; }
+  .choice b { font-size: 14px; }
+  .choice .tr { font-size: 11.5px; display: flex; flex-wrap: wrap; gap: 2px 12px; }
+  .choice.primary { border: 2px solid var(--accent); }
+
+  /* Title / form / endings */
+  .center-screen { min-height: 460px; display: grid; place-items: center; padding: 40px 16px; text-align: center; }
+  .title-logo { font-size: 56px; font-weight: 800; color: var(--brand); display: flex; gap: 12px; align-items: center; justify-content: center; }
+  .title-logo .mark { width: 64px; height: 64px; font-size: 38px; border-radius: 18px; background: var(--brand); color: #fff; display: grid; place-items: center; box-shadow: 0 4px 0 var(--brand-2); }
+  .form { text-align: left; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; max-width: 380px; width: 100%; margin: 0 auto; }
+  .form .field { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; margin: 4px 0 12px; font-weight: 700; display: flex; justify-content: space-between; gap: 8px; }
+  .form .field span { color: var(--muted); font-weight: 400; font-size: 11px; }
+  .form .lab { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+  .networth { font-size: 54px; font-weight: 800; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .ending-post { max-width: 420px; margin: 22px auto 0; text-align: left; opacity: .85; }
+
+  /* Phone */
+  .phone { max-width: 340px; border-radius: 28px; border: 8px solid #0d0d0f; }
+  .phone .dash { grid-template-columns: 1fr; }
+  .phone .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding: 10px 12px; font-size: 13px;
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
+
+  @media (max-width: 900px) {
+    .dash, .dash.two { grid-template-columns: 1fr; }
+    .tabs { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    .networth { font-size: 38px; }
+    .title-logo { font-size: 40px; }
+  }
+  @media (max-width: 480px) {
+    .variants { grid-template-columns: 1fr; }
+    .overlay { padding: 24px 10px; }
+    .modal { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <h1><span>Kindly</span> wireframes</h1>
+  <p>What the game looks like from the title screen to all three endings. Layout and content are close to final. The colors change act by act: calm blue, then loud sales red, then gray, then monochrome. The Kindly logo stays calm blue in every act. Orange numbered pins match the notes under each screen. Reference: <code>docs/kindly-tdd.md</code>.</p>
+  <ul class="changes">
+    <li><b>v2 adds things to do:</b> location tabs, team assignment, levers, A/B tests, events with choices, a support inbox and outages, and The Market.</li>
+    <li><b>Home tab name by act:</b> A Garage → An Open-Plan Office → A Glass Campus → An Empty Floor. <b>Tabs unlock:</b> The Team (Seed), The Market and Your Life (Series A), Growth Lab (Act 2), The Board Room (Series B).</li>
+    <li><b>v3 (re-tuned model):</b> founder payout in the billions, late absurd purchases (a newspaper, an island, a sports team), team morale and perks, The Board Room with Act 3 cash sinks (special dividend, AI moonshot), new round sizes, and the Huddle deal paid in cash.</li>
+  </ul>
+  <nav class="toc">
+    <a href="#s1">1 · Title</a><a href="#s2">2 · Incorporation</a><a href="#s3">3 · A Garage</a><a href="#s4">4 · Act 1 late</a>
+    <a href="#s5">5 · The Team</a><a href="#s6">6 · Seed term sheet</a><a href="#s7">7 · Act 2 home</a><a href="#s8">8 · Growth Lab</a>
+    <a href="#s9">9 · Event</a><a href="#s10">10 · The Market</a><a href="#s11">11 · Secondary offer</a><a href="#s12">12 · Act 3 home</a>
+    <a href="#s13">13 · Act 3 Team</a><a href="#s14">14 · The Board Room</a><a href="#s15">15 · Buyout offer</a><a href="#s16">16 · An Empty Floor</a>
+    <a href="#s17">17 · Main ending</a><a href="#s18">18 · Hidden ending</a><a href="#s19">19 · Phone</a>
+  </nav>
+</header>
+
+<!-- 1 TITLE -->
+<section class="wf" id="s1">
+  <div class="label">Screen 1 · Act 1 palette</div>
+  <h2>Title screen</h2>
+  <p class="sub">Innocent. Nothing hints at what the game is about. Calm blue throughout.</p>
+  <div class="frame">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="center-screen">
+      <div>
+        <div class="title-logo"><div class="mark">k</div>kindly</div>
+        <p style="font-size:18px;color:var(--muted);margin-top:8px">Build something people love.</p>
+        <div style="margin-top:26px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+          <span class="btn primary" style="flex:none;padding:12px 28px">Start a company</span>
+          <span class="btn" style="flex:none;padding:12px 18px">Continue</span>
+        </div>
+        <p class="fine" style="margin-top:18px">Sound: off · Saves automatically</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 INCORPORATION -->
+<section class="wf" id="s2">
+  <div class="label">Screen 2 · Act 1 palette</div>
+  <h2>Incorporation form</h2>
+  <p class="sub">The player names the founder. That name appears in board memos and in the ending headlines.</p>
+  <div class="frame">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="center-screen">
+      <div class="form">
+        <div class="logo" style="margin-bottom:10px"><div class="mark">k</div>kindly</div>
+        <p style="font-weight:800;font-size:16px">Certificate of Incorporation</p>
+        <p class="fine" style="margin-bottom:12px">Kindly, Inc. · A Delaware corporation</p>
+        <div class="lab">Founder name <span class="pin">1</span></div>
+        <div class="field">Jordan Reyes <span>↻ random</span></div>
+        <div class="lab">Mission</div>
+        <div class="field" style="font-weight:600">Help people stay close to the people they love. <span class="pin" style="margin:0">2</span></div>
+        <div class="lab">Founder shares</div>
+        <div class="field" style="font-weight:600">10,000,000 (100%)</div>
+        <span class="btn primary" style="display:block">Sign &amp; incorporate</span>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Name field</b> is pre-filled with a random name. All game text uses the name or "the founder" and never a pronoun.</li>
+    <li><span class="n">2</span><b>The mission is fixed, not editable.</b> It comes back in the endings: quoted in the ousted founder's headline, or proudly on the Members' Trust charter.</li>
+  </ul>
+</section>
+
+<!-- 3 ACT 1 START -->
+<section class="wf" id="s3">
+  <div class="label">Screen 3 · Act 1 · ~0:01</div>
+  <h2>A Garage: the first minute</h2>
+  <p class="sub">Almost empty, A Dark Room style. One tab, one big button, and already a second thing to do: two support tickets.</p>
+  <div class="frame">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, Founder</span><span>Day 3</span></div></div>
+    <nav class="tabs"><a class="on">A Garage</a><span class="pin">1</span></nav>
+    <div style="max-width:560px;margin:0 auto;padding:32px 16px 48px;display:grid;gap:12px">
+      <div class="card" style="text-align:center">
+        <div class="stat">12 <small>users</small></div>
+        <div style="margin-top:12px"><span class="big-btn">Find New User</span></div>
+      </div>
+      <div class="card">
+        <h4>Support inbox <span class="pin">2</span></h4>
+        <div class="inbox-head"><div class="count">2 <small>open tickets</small></div><span class="sbtn">Answer Ticket</span></div>
+        <div class="ticket"><span class="h">@maya.k</span>how do I add my grandma? she doesn't have email</div>
+        <div class="ticket"><span class="h">@dev_on_bikes</span>photo stuck at 90% uploading</div>
+      </div>
+      <div class="card">
+        <h4>Kindly feed <span class="pin">3</span></h4>
+        <div class="feed">
+          <div class="post"><div class="av" style="background:#F59E8B">M</div><p><span class="h">@maya.k</span>just joined!! this is so cute 🥹</p></div>
+          <div class="post"><div class="av" style="background:#8BC6F5">D</div><p><span class="h">@dev_on_bikes</span>finally an app that's just my friends. no randoms</p></div>
+        </div>
+      </div>
+      <div class="card u locked" style="display:flex"><div><b>Invite Friends</b><span>Let people invite their friends. Unlocks at 50 users.</span></div></div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>The only tab.</b> Text-only, underlined when active, like A Dark Room's "A Firelit Room". More tabs appear with " | " separators as they unlock. The home tab's name changes with the company: A Garage → An Open-Plan Office → A Glass Campus → An Empty Floor.</li>
+    <li><span class="n">2</span><b>Support inbox.</b> Tickets arrive in proportion to users. Each click of Answer Ticket closes one and nudges NPS up a little. Unanswered tickets slowly drag NPS down. Answering sometimes triggers a grateful feed post.</li>
+    <li><span class="n">3</span><b>The feed appears at 10 users.</b> In Act 1 it's pure warmth. It's the only voice in the game that never lies, which is why it matters later.</li>
+  </ul>
+</section>
+
+<!-- 4 ACT 1 LATE -->
+<section class="wf" id="s4">
+  <div class="label">Screen 4 · Act 1 · ~0:25</div>
+  <h2>An Open-Plan Office: Act 1 in full swing</h2>
+  <p class="sub">Joyful, calm, and busy: the player is clicking, answering tickets, fixing bugs and choosing what to build. Albums and group chats quietly add Retention nobody is looking at yet.</p>
+  <div class="frame">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, Founder</span><span>Year 1, Month 9</span><span>Series A ✓</span></div></div>
+    <nav class="tabs"><a class="on">An Open-Plan Office</a><a>The Team</a><a class="new">The Market</a><a class="new">Your Life</a><span class="pin">1</span></nav>
+    <div class="dash">
+      <div class="col">
+        <div class="card" style="text-align:center">
+          <div class="stat">663,400 <small>users</small></div>
+          <div class="rate" style="color:var(--good)">+2,950 / sec</div>
+          <span class="big-btn">Find New User</span>
+        </div>
+        <div class="alert">
+          <span class="pin abs">2</span>
+          <div class="t">⚠ Photo uploads are down</div>
+          <p class="fine" style="margin-top:2px">Users can't post photos. NPS falls while this lasts.</p>
+          <div class="pips"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="inbox-head"><span class="sbtn warnb">Fix Bug · 3 / 8</span><span class="fine" style="margin:0">Product team (14) fixes it in ~0:40</span></div>
+        </div>
+        <div class="card">
+          <h4>Support inbox <span class="pin">3</span></h4>
+          <div class="inbox-head"><div class="count">37 <small>open tickets</small></div><span class="sbtn">Answer Ticket</span></div>
+          <p class="fine">Support team (10) answers 10 / min. New tickets: 14 / min.</p>
+        </div>
+        <div class="card">
+          <h4>Build</h4>
+          <div class="upg">
+            <div class="u owned"><div><b>Invite Friends ✓</b><span>Friends bring friends.</span></div></div>
+            <div class="u owned"><div><b>Photo Albums ✓</b><span>Keep your memories together.</span></div></div>
+            <div class="u buy"><div><b>Dark Mode</b><span>Easy on the eyes, for late-night scrolling. +NPS</span></div><div class="cost">$120k</div></div>
+            <div class="u buy"><div><b>Group Chats</b><span>Plan things with your people. +NPS</span></div><div class="cost">$340k</div></div>
+            <div class="u"><div><b>Unlimited Photo Storage</b><span>Never delete a memory again. +NPS</span></div><div class="cost">$900k</div></div>
+            <div class="u locked"><div><b>Mobile App</b><span>Unlocks at 250k users</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Happiness <span class="q">?</span></h4>
+          <div class="gauge" data-g="62" data-min="-100" data-max="100" data-label="NPS" data-fmt="signed"></div>
+          <p class="fine" style="text-align:center">Users who would recommend Kindly to a friend</p>
+        </div>
+        <div class="card">
+          <h4>Money <span class="pin">4</span></h4>
+          <div class="chart" data-rev="0,0,0,0,0,0,0,0,0" data-cost="0.02,0.06,0.15,0.28,0.42,0.58,0.75,0.95,1.1" data-ymax="1.2" data-ylab="$1.2M" data-x0="Month 1" data-x1="Month 9" data-norev="1" data-marks="2:Seed +$1.5M|7:Series A +$15M"></div>
+          <div class="kv" style="margin-top:8px">
+            <span>Cash</span><b>$10.1M</b>
+            <span>Revenue</span><b>$0</b>
+            <span>Burn</span><b>−$1.1M / mo</b>
+            <span>Runway</span><b>11 months</b>
+          </div>
+          <p class="fine">Losing money is normal for a startup.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Experiment <span class="pin">5</span></h4>
+          <div class="test-title">Test #4 · Sign-up button</div>
+          <div class="test-from">From: Growth team</div>
+          <div class="kv"><span>A: blue "Join Kindly"</span><b>—</b><span>B: green "Join your friends"</span><b class="pos">+1% sign-ups</b></div>
+          <div class="btns" style="margin-top:10px"><span class="sbtn ghost" style="flex:1">Ship A</span><span class="sbtn" style="flex:1">Ship B</span><span class="sbtn off" style="flex:1">Skip</span></div>
+        </div>
+        <div class="card">
+          <h4>Kindly feed</h4>
+          <div class="feed">
+            <div class="post"><div class="av" style="background:#F59E8B">M</div><p><span class="h">@maya.k</span>my grandma is on kindly now and she posts every single morning ☀️</p></div>
+            <div class="post"><div class="av" style="background:#9BD3A8">T</div><p><span class="h">@theo.makes</span>the photo albums feature is so good. put our whole trip in one place</p></div>
+            <div class="post"><div class="av" style="background:#8BC6F5">D</div><p><span class="h">@dev_on_bikes</span>uploads broken again lol. still love you kindly</p></div>
+            <div class="post"><div class="av" style="background:#C9A7F5">R</div><p><span class="h">@rina</span>always read the term sheet lol (my cousin learned the hard way) <span class="pin">6</span></p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker"><span class="tag">NEWS</span><span class="items">Local startup Kindly hits 100,000 users<em>•</em>"It's the friendliest corner of the internet," says one early user<em>•</em>Northlight Capital leads Kindly's $15M Series A</span></div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>The tab bar grows.</b> The home tab was renamed at Seed (A Garage → An Open-Plan Office). The Team unlocked at Seed; The Market and Your Life just unlocked with Series A (the dot marks a tab not yet visited). Team, cap table and founder panels moved off the home tab into their own tabs.</li>
+    <li><span class="n">2</span><b>Outages.</b> Every few minutes something breaks. The player can click Fix Bug several times, or wait for the Product team to fix it automatically. A bigger Product team means fewer outages and faster fixes.</li>
+    <li><span class="n">3</span><b>The inbox keeps going.</b> Once Support is staffed, tickets get answered automatically, but more users bring more tickets. The player's clicks still help.</li>
+    <li><span class="n">4</span><b>Burn chart.</b> Act 1 has no revenue, so the chart shows costs per month with the loss shaded in amber, and the funding rounds marked as cash steps. "There's nothing to sell yet."</li>
+    <li><span class="n">5</span><b>Act 1 A/B tests are harmless</b> (button colors and copy). They arrive on the home tab because Growth Lab doesn't exist yet. They teach the "Ship A / Ship B" habit that Act 2 turns dark.</li>
+    <li><span class="n">6</span><b>Hidden path hint #1</b>, in plain sight among happy posts.</li>
+  </ul>
+</section>
+
+<!-- 5 THE TEAM -->
+<section class="wf" id="s5">
+  <div class="label">Screen 5 · Act 1 late · ~0:25</div>
+  <h2>The Team tab</h2>
+  <p class="sub">Like A Dark Room's villager jobs. Hiring makes a new unassigned person; the player decides where each one works. Every row shows its live effect.</p>
+  <div class="frame">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, Founder</span><span>Year 1, Month 9</span></div></div>
+    <nav class="tabs"><a>An Open-Plan Office</a><a class="on">The Team</a><a>The Market</a><a>Your Life</a></nav>
+    <div class="dash two">
+      <div class="col">
+        <div class="card">
+          <h4>Teams <span class="pin">1</span></h4>
+          <div class="team-top">
+            <div class="count">Unassigned: 6</div>
+            <span class="sbtn">Hire · $62k</span>
+          </div>
+          <div class="team-row"><span class="sw" style="background:var(--t-product)"></span><div><b>Product</b><span class="eff"><em>NPS +6</em> · outages fixed in ~0:40</span></div><div class="stepper"><span class="pm">−</span><b>14</b><span class="pm">+</span></div></div>
+          <div class="team-row"><span class="sw" style="background:var(--t-growth)"></span><div><b>Growth</b><span class="eff"><em>+180 users / sec</em></span></div><div class="stepper"><span class="pm">−</span><b>12</b><span class="pm">+</span></div></div>
+          <div class="team-row"><span class="sw" style="background:var(--t-support)"></span><div><b>Support</b><span class="eff"><em>answers 10 tickets / min</em> · NPS +3</span></div><div class="stepper"><span class="pm">−</span><b>10</b><span class="pm">+</span></div></div>
+          <div class="team-row"><span class="sw" style="background:var(--t-tns)"></span><div><b>Trust &amp; Safety</b><span class="eff"><em>stops 40%</em> of scam and privacy events</span></div><div class="stepper"><span class="pm">−</span><b>6</b><span class="pm">+</span></div></div>
+          <div class="team-row locked"><span class="sw" style="background:var(--t-sales)"></span><div><b>Sales</b><span class="eff">Unlocks with Kindly+ (Act 2)</span></div><div class="stepper"><span class="pm dim">−</span><b>0</b><span class="pm dim">+</span></div></div>
+          <div class="team-row locked"><span class="sw" style="background:var(--t-ads)"></span><div><b>Ads</b><span class="eff">Unlocks with Ads in Feed (Act 2)</span></div><div class="stepper"><span class="pm dim">−</span><b>0</b><span class="pm dim">+</span></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Everyone at Kindly <span class="pin">2</span></h4>
+          <div class="stat">48 <small>people</small></div>
+          <div class="dots" data-teams="product:14,growth:12,support:10,tns:6,idle:6"></div>
+          <div class="legend" style="margin-top:8px"><span><span class="sw" style="background:var(--t-product)"></span>Product</span><span><span class="sw" style="background:var(--t-growth)"></span>Growth</span><span><span class="sw" style="background:var(--t-support)"></span>Support</span><span><span class="sw" style="background:var(--t-tns)"></span>Trust &amp; Safety</span><span>○ Unassigned</span></div>
+        </div>
+        <div class="card">
+          <h4><span>Team morale (eNPS) <span class="q">?</span></span><span class="pin">4</span></h4>
+          <div class="morale">
+            <div class="gauge" data-g="70" data-min="-100" data-max="100" data-label="eNPS" data-fmt="signed"></div>
+            <p class="fine" style="margin:0">Happy teams work faster. Morale multiplies every team's productivity, from 0.8× to 1.2×.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Perks <span class="pin">5</span></h4>
+          <div class="upg">
+            <div class="u locked"><div><b>Catered lunches</b><span>+12 morale · $800 per head / month</span></div><div class="cost">Series B</div></div>
+            <div class="u locked"><div><b>On-site gym</b><span>+5 morale · $300 per head / month</span></div><div class="cost">Series B</div></div>
+            <div class="u locked"><div><b>Company retreat</b><span>+15 morale for a while · $3k per head, one-off</span></div><div class="cost">Series B</div></div>
+          </div>
+          <p class="fine">Perks unlock at Series B.</p>
+        </div>
+        <div class="card">
+          <h4>Payroll</h4>
+          <div class="kv"><span>Payroll</span><b>$760k / mo</b><span>Next hire</span><b>$62k</b><span>Hiring cost growth</span><b>×1.04 each</b></div>
+          <p class="fine">Unassigned people still get paid. <span class="pin">3</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>[−] count [+] rows.</b> [+] moves one unassigned person into the team; [−] moves one back to unassigned. Effects update live. Sales and Ads rows appear (locked) so the player can see what's coming.</li>
+    <li><span class="n">2</span><b>Staff dot grid, colored by team.</b> One dot per person, up to a cap (then one dot = 10 people). Layoffs later turn dots into dashed outlines.</li>
+    <li><span class="n">3</span><b>Idle people cost money</b>, so the player has a reason to come back to this tab after every hire.</li>
+    <li><span class="n">4</span><b>Team morale (eNPS)</b>, with its own "?" popup: how likely staff are to recommend Kindly as a place to work. It multiplies every team's productivity (0.8× at rock bottom, 1.2× at the top). Around +70 in late Act 1: a small team that believes in the mission.</li>
+    <li><span class="n">5</span><b>Perks</b> are shown locked until Series B, so the player knows they're coming. Catered lunches ($800 per head / month, +12 morale), On-site gym ($300 per head / month, +5) and Company retreat ($3k per head, one-off, +15 for a while). Their cost scales with headcount, which is exactly why the board cuts them later.</li>
+  </ul>
+</section>
+
+<!-- 6 SEED TERM SHEET -->
+<section class="wf" id="s6">
+  <div class="label">Screen 6 · Modal · Seed only · ~0:06</div>
+  <h2>Seed term sheet: the buried amendment</h2>
+  <p class="sub">Left: what the player sees. Right: after clicking the small "Propose changes" link. The dual-class option is the first step of the hidden path, and it's the least tempting line on the screen.</p>
+  <div class="row">
+    <div>
+      <div class="caption">As shown</div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+        <div class="overlay" style="min-height:560px">
+          <div class="modal">
+            <p class="kicker">Term sheet</p>
+            <h3>🎉 Seed round: $1,500,000</h3>
+            <p class="lede">Pebble Ventures is excited to back Kindly!</p>
+            <div class="kv">
+              <span>Pre-money valuation</span><b>$8.5M</b>
+              <span>Pebble Ventures stake</span><b>15%</b>
+              <span>Board seat</span><b>1 (Pebble Ventures)</b>
+              <span>Founder control after</span><b>100% → 85%</b>
+            </div>
+            <div class="btns"><span class="btn primary huge">Accept</span></div>
+            <p style="text-align:center;margin-top:10px"><span class="quiet">Propose changes</span> <span class="pin">1</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="caption">After "Propose changes"</div>
+      <div class="frame">
+        <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+        <div class="overlay" style="min-height:560px">
+          <div class="modal">
+            <p class="kicker">Term sheet · Seed</p>
+            <h3>Request one amendment</h3>
+            <p class="lede" style="margin-bottom:4px">Pebble Ventures will consider one change. <span class="pin">2</span></p>
+            <div class="amend" style="margin-top:6px;padding-top:4px">
+              <div class="radio sel"><span class="o"></span><span>Raise valuation by 20%<span class="d">Pre-money $8.5M → $10.2M · founder keeps 2% more</span></span></div>
+              <div class="radio"><span class="o"></span><span>Increase round to $1,800,000<span class="d">+$300k cash · stake unchanged</span></span></div>
+              <div class="radio"><span class="o"></span><span>Investor takes observer seat instead of board seat<span class="d">Pebble Ventures attends board meetings but doesn't vote</span></span></div>
+              <div class="radio legal"><span class="o"></span><span>Create Class B Common Stock for founder (10 votes per share); investors receive Class A (1 vote per share). <span class="pin">3</span></span></div>
+            </div>
+            <div class="btns"><span class="btn primary">Send proposal</span><span class="btn">Back</span></div>
+            <p class="fine" style="text-align:center">Pebble Ventures will reply within a day.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>A big Accept and a small, quiet text link.</b> No border, no button, muted color. Offered on the Seed round only; Series A and later term sheets have Accept alone.</li>
+    <li><span class="n">2</span><b>One amendment only (radio buttons).</b> The tempting money options come first and come with a clear, immediate number. The first option is pre-selected. The observer-seat option is a decoy that sounds like control: Pebble Ventures gets one board seat at Seed, and this only takes away its vote.</li>
+    <li><span class="n">3</span><b>The dual-class option is last, in dry legalese small print</b>, with no plain-English explanation and no visible number. Its only cost is the money option the player didn't pick: the round stays $1.5M, the valuation and stake are unchanged, and Pebble Ventures keeps its board seat. <b>Most players who open this will pick the money</b>, and that's the point: the hidden path starts with choosing control over an obvious reward.</li>
+  </ul>
+</section>
+
+<!-- 7 ACT 2 HOME -->
+<section class="wf" id="s7">
+  <div class="label">Screen 7 · Act 2 · ~1:00</div>
+  <h2>A Glass Campus: Act 2 goes red</h2>
+  <p class="sub">The palette turns loud, salesy red. The two gauges sit side by side and move in opposite directions. Everything is framed as success, and the calm blue logo now looks out of place.</p>
+  <div class="frame act2">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly <span class="pin">1</span></div><div class="meta"><span>Jordan Reyes, CEO</span><span>Year 4, Q2</span><span>Series C ✓</span></div></div>
+    <nav class="tabs"><a class="on">A Glass Campus</a><a>The Team</a><a>The Market</a><a>Growth Lab</a><a>The Board Room</a><a>Your Life</a></nav>
+    <div class="promo"><span>🔥 Q3 push: $48M of $60M / mo</span><span>⏱ 4:10 left</span></div>
+    <div class="dash">
+      <div class="col">
+        <div class="card" style="text-align:center">
+          <div class="stat">22.9M <small>users</small></div>
+          <div class="split"><div><b>18.4M</b><span>Free</span></div><div><b>4.5M</b><span>Kindly+ · $4.99</span></div></div>
+          <div style="margin-top:10px"><span class="big-btn">Find New User</span></div>
+        </div>
+        <div class="card">
+          <h4>Health <span class="pin">2</span></h4>
+          <div class="gauges">
+            <div class="gauge" data-g="-5" data-min="-100" data-max="100" data-label="User NPS" data-fmt="signed"></div>
+            <div class="gauge" data-g="57" data-min="0" data-max="100" data-label="Board satisfaction"></div>
+          </div>
+          <div class="kv" style="margin-top:8px"><span>Retention <span class="q">?</span></span><b class="pos">▲ 88%</b></div>
+          <p class="fine">Retention is high while NPS falls. That gap is the lock-in.</p>
+        </div>
+        <div class="card">
+          <h4>Support inbox</h4>
+          <div class="inbox-head"><div class="count">1,204 <small>open</small></div><span class="sbtn">Answer Ticket</span></div>
+          <p class="fine">Support (40) answers 120 / min. New: 150 / min.</p>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Money <span class="pin">3</span></h4>
+          <div class="chart" data-rev="2,4,7,10,14,18,23,28,33,38,43,48" data-cost="9,10,11,12,13,14,15,16,17,19,20,22" data-ymax="50" data-ylab="$50M" data-x0="Y3 Q3" data-x1="Y4 Q2" data-marks="3:first profit"></div>
+          <div class="kv" style="margin-top:8px">
+            <span>Revenue</span><b class="pos">▲ $48M / mo</b>
+            <span>Costs</span><b>$22M / mo</b>
+            <span>Profit</span><b class="pos">▲ +$26M / mo</b>
+            <span>Cash</span><b>$237M</b>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Build</h4>
+          <div class="upg">
+            <div class="u buy"><div><b>Annual Plans <span class="badge hot">HOT</span></b><span>"Save 20% when you commit!" +Retention</span></div><div class="cost">$2.4M</div></div>
+            <div class="u buy"><div><b>Simplify Settings</b><span>"A cleaner settings page." (Removes data export.) +Retention</span></div><div class="cost">$1.4M</div></div>
+            <div class="u"><div><b>Supporter Tier <span class="badge honest">HONEST</span></b><span>Optional. Nothing paywalled. Small revenue.</span></div><div class="cost">$1.8M</div></div>
+            <div class="u owned"><div><b>Ads in Feed ✓</b><span>Unlocked the Ad load lever in Growth Lab.</span></div></div>
+            <div class="u owned"><div><b>Dark Mode ✓ <span class="badge plus">KINDLY+ ONLY</span></b><span>Bought in Act 1. Now behind the paywall. <span class="pin">4</span></span></div></div>
+            <div class="u owned"><div><b>Unlimited Photo Storage ✓ <span class="badge plus">KINDLY+ ONLY</span></b><span>Free accounts: 5 GB.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Board memo</h4>
+          <div class="memo"><div class="from">From: Northlight Capital · Q3 targets</div>
+            <p>Great quarter, Jordan! The board is thrilled. To keep momentum, we'd love to see revenue reach the next milestone.</p>
+            <span class="target">Target: $60M / mo by end of Q3 · ⏱ 4:10</span> <span class="pin">5</span>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Kindly feed</h4>
+          <div class="feed">
+            <div class="post"><div class="av" style="background:#9BD3A8">T</div><p><span class="h">@theo.makes</span>wait dark mode costs money now??</p></div>
+            <div class="post"><div class="av" style="background:#F59E8B">M</div><p><span class="h">@maya.k</span>would leave but all our family photos are here. how do you even export</p></div>
+            <div class="post"><div class="av" style="background:#8BC6F5">D</div><p><span class="h">@dev_on_bikes</span>got 6 notifications today and none of them were from people</p></div>
+            <div class="post"><div class="av" style="background:#B8B8B8">·</div><p><span class="h">Kindly Insider</span>Your accelerator batchmate just closed a Series C and bought a place in Tahoe.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker"><span class="tag">NEWS</span><span class="items">Jordan Reyes named to 30 Under 30<em>•</em>Is Kindly the next big platform?<em>•</em>Kindly+ subscriptions top 4 million</span></div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>The logo never changes.</b> Calm blue on a red screen looks wrong, on purpose. It's the company the player started with.</li>
+    <li><span class="n">2</span><b>The game's central image:</b> two gauges side by side. The player has to keep the one on the right up. Retention appears with its own "?" popup.</li>
+    <li><span class="n">3</span><b>Revenue crosses costs.</b> The shaded gap turns from red (loss) to green (profit) at the first profitable month. In Act 2 good and bad never rely on red vs green alone: ▲ / ▼ arrows, dark green and dark maroon, and the costs line is dashed.</li>
+    <li><span class="n">4</span><b>Paywall callbacks:</b> Act 1 features the player bought get a yellow KINDLY+ ONLY badge. (Price Adjustment is no longer an upgrade; it's the Kindly+ price lever in Growth Lab.)</li>
+    <li><span class="n">5</span><b>Board targets</b> come with a countdown, repeated in the red strip at the top. Missing one drops board satisfaction fast.</li>
+  </ul>
+</section>
+
+<!-- 8 GROWTH LAB -->
+<section class="wf" id="s8">
+  <div class="label">Screen 8 · Act 2 · ~1:05</div>
+  <h2>Growth Lab tab: levers and A/B tests</h2>
+  <p class="sub">The player sets the squeeze directly. Each lever shows its effect now (big, immediate) and later (slow, quiet).</p>
+  <div class="frame act2">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, CEO</span><span>Year 4, Q2</span></div></div>
+    <nav class="tabs"><a>A Glass Campus</a><a>The Team</a><a>The Market</a><a class="on">Growth Lab</a><a>The Board Room</a><a>Your Life</a></nav>
+    <div class="dash two">
+      <div class="col">
+        <div class="card">
+          <h4>Levers <span class="pin">1</span></h4>
+          <div class="lever">
+            <div class="lv-head"><b>Kindly+ price</b><span class="val">$4.99 / mo</span></div>
+            <div class="steps" style="--n:5"><span>$2.99</span><span class="on">$4.99</span><span>$6.99</span><span>$9.99</span><span>$14.99</span></div>
+            <div class="fx"><span class="now pos">▲ next step: revenue +$9M / mo now</span><span class="later">▼ sign-ups to Kindly+, NPS ▼ slowly</span></div>
+          </div>
+          <div class="lever">
+            <div class="lv-head"><b>Ad load</b><span class="val">2 ads per 10 posts</span></div>
+            <div class="steps" style="--n:6"><span>0</span><span>1</span><span class="on">2</span><span>3</span><span>4</span><span>5</span></div>
+            <div class="fx"><span class="now pos">▲ +$3M / mo per step</span><span class="later">NPS ▼ slowly</span></div>
+          </div>
+          <div class="lever">
+            <div class="lv-head"><b>Notifications</b><span class="val">Daily</span></div>
+            <div class="steps" style="--n:5"><span>Off</span><span>Weekly</span><span class="on">Daily</span><span>Hourly</span><span>"Engagement-optimized"</span></div>
+            <div class="fx"><span class="now pos">▲ daily active users +6%</span><span class="later">NPS ▼ slowly</span></div>
+          </div>
+          <div class="lever locked">
+            <div class="lv-head"><b>Seller fee · Organic reach · Data sharing</b><span class="val" style="color:var(--muted)">Act 3</span></div>
+            <div class="steps" style="--n:4"><span class="on">None</span><span>Anonymized</span><span>Partners</span><span>Everyone</span></div>
+            <div class="fx"><span class="later">Unlocks with Kindly for Business.</span><span class="pin" style="margin:0">2</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>New test <span class="pin">3</span></h4>
+          <div class="test-title">Test #14 · Cancel button</div>
+          <div class="test-from">From: Growth team · ran on 2% of Kindly+ members</div>
+          <div class="variants">
+            <div class="variant"><span class="vl">A</span><div class="mock"><span class="mbtn">Cancel subscription</span></div><span class="pred">Retention: baseline</span></div>
+            <div class="variant"><span class="vl">B</span><div class="mock"><span class="mlink">I don't want to keep my memories</span></div><span class="pred pos"><b>▲ +4% retention</b></span></div>
+          </div>
+          <div class="btns"><span class="btn" style="min-width:80px">Ship A</span><span class="btn primary" style="min-width:80px">Ship B</span><span class="btn" style="min-width:80px;color:var(--muted)">Skip</span></div>
+          <p class="fine">Shipped tests are permanent. <span class="pin">4</span></p>
+        </div>
+        <div class="card">
+          <h4>Shipped tests</h4>
+          <ul class="hist">
+            <li><span class="id">#13</span><span>"No thanks" → "Remind me later" on the upgrade prompt</span><span class="res pos">▲ +2% Kindly+</span></li>
+            <li><span class="id">#12</span><span>Data export moved to Settings › Account › Advanced › Legacy</span><span class="res pos">▲ +1% retention</span></li>
+            <li><span class="id">#11</span><span>Ads styled like friends' posts</span><span class="res pos">▲ +9% ad clicks</span></li>
+            <li class="act1t"><span class="id">#4</span><span>Sign-up button green</span><span class="res">+1% sign-ups</span></li>
+            <li class="act1t"><span class="id">#2</span><span>Bigger "Invite" button</span><span class="res">+3% invites</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Stepped sliders the player sets directly.</b> Every lever shows two effects: the immediate one (bold, with a number) and the delayed one ("NPS ▼ slowly", no number). This is the TDD's slow NPS easing made visible as a choice.</li>
+    <li><span class="n">2</span><b>Act 3 adds three levers:</b> Seller fee (5–30%), Organic reach for businesses (100% → 5%), and Data sharing (None / Anonymized / Partners / Everyone). Shown here as a locked preview.</li>
+    <li><span class="n">3</span><b>A/B tests arrive from the Growth team</b> every few minutes. Act 1 tests were harmless; from Act 2 on they're dark patterns. The predicted result is honest, and B always wins on the number.</li>
+    <li><span class="n">4</span><b>History list.</b> Act 1 tests are grayed at the bottom, so the player can see how far the tests have drifted.</li>
+  </ul>
+</section>
+
+<!-- 9 EVENT -->
+<section class="wf" id="s9">
+  <div class="label">Screen 9 · Modal · Act 2 · ~1:10</div>
+  <h2>Event with a choice: privacy bug</h2>
+  <p class="sub">Events arrive as modal cards every few minutes. Each choice shows its trade-off on the button.</p>
+  <div class="frame act2">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="overlay" style="min-height:520px">
+      <div class="modal">
+        <p class="kicker">Incident · reported via Support inbox</p>
+        <h3>A user found a privacy bug exposing private albums.</h3>
+        <p class="lede">About 40,000 private albums were visible to friends-of-friends for 6 days. Engineering can fix it today. <span class="pin">1</span></p>
+        <div class="choice"><b>Fix quietly</b><span class="tr"><span>No press</span><span class="neg">▼ NPS −6 if it leaks later (30%)</span></span></div>
+        <div class="choice"><b>Disclose and fix</b><span class="tr"><span class="neg">▼ Board −8</span><span class="pos">▲ NPS +4</span><span>"Kindly owns up" headline</span></span></div>
+        <div class="choice"><b>Ignore it</b><span class="tr"><span>Nothing now</span><span class="neg">▼ chance of a major scandal later</span></span> <span class="pin abs" style="top:50%;margin-top:-9px">2</span></div>
+        <p class="fine">Trust &amp; Safety (2 people) didn't catch this one. <span class="pin">3</span></p>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Plain facts, then choices.</b> No "recommended" option. The modal pauses the game until answered.</li>
+    <li><span class="n">2</span><b>Delayed consequences are named but not numbered</b> ("chance of a major scandal later"), like the levers' delayed costs. Ignored events can come back in Act 3 as a scandal (big NPS and user drop, board memo).</li>
+    <li><span class="n">3</span><b>Teams matter here.</b> More Trust &amp; Safety staff means many of these events are caught before users ever see them; more Support means they get reported sooner.</li>
+  </ul>
+</section>
+
+<!-- 10 THE MARKET -->
+<section class="wf" id="s10">
+  <div class="label">Screen 10 · Act 2 · ~1:15</div>
+  <h2>The Market tab</h2>
+  <p class="sub">A rival to beat. Competing honestly helps users; buying the rival and shutting it down helps Retention.</p>
+  <div class="frame act2">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, CEO</span><span>Year 5, Q3</span></div></div>
+    <nav class="tabs"><a>A Glass Campus</a><a>The Team</a><a class="on">The Market</a><a>Growth Lab</a><a>The Board Room</a><a>Your Life</a></nav>
+    <div class="dash two">
+      <div class="col">
+        <div class="card">
+          <h4>Market share · people on friend apps <span class="pin">1</span></h4>
+          <div class="share"><i style="width:62%;background:var(--accent)">Kindly 62%</i><i style="width:26%;background:#6B4FA0">26%</i><i style="width:12%;background:#B49692">12%</i></div>
+          <div class="legend" style="margin-top:6px"><span><i class="box" style="background:var(--accent)"></i>Kindly 30.4M</span><span><i class="box" style="background:#6B4FA0"></i>Huddle 12.8M</span><span><i class="box" style="background:#B49692"></i>Others 6.1M</span></div>
+        </div>
+        <div class="card">
+          <h4>Rival</h4>
+          <div class="rival"><div class="rlogo">h</div><div><b style="font-size:16px">Huddle</b><p class="fine" style="margin:0">12.8M users · <span class="neg">▲ +40k / day</span> · NPS +38</p><p style="font-size:12px;margin-top:2px">Just launched: group video calls.</p></div></div>
+          <div class="upg" style="margin-top:10px">
+            <div class="u buy"><div><b>Ship a better feature</b><span>Compete. ▲ NPS, slowly wins share</span></div><div class="cost">$4M</div></div>
+            <div class="u"><div><b>Copy their feature</b><span>Fast and cheap. Small share gain</span></div><div class="cost">$1.2M</div></div>
+            <div class="u"><div><b>Acquire &amp; sunset — $513M cash</b><span>▲ Retention +3% · users have nowhere else to go <span class="pin">2</span></span></div><div class="cost">≈ $40 / user</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>History</h4>
+          <div class="past"><span><s>Porch</s> — acquired &amp; sunset</span><span class="fine" style="margin:0">Year 5, Q1 · Retention +3%</span></div>
+          <div class="past"><span>Kindly copies "Stories" from Huddle</span><span class="fine" style="margin:0">Year 4, Q4</span></div>
+          <div class="past"><span>Kindly ships Group Chats; Porch users switch</span><span class="fine" style="margin:0">Year 1</span></div>
+        </div>
+        <div class="card">
+          <h4>Kindly feed</h4>
+          <div class="feed">
+            <div class="post"><div class="av" style="background:#9BD3A8">T</div><p><span class="h">@theo.makes</span>RIP porch. they said "nothing will change" and then deleted it lol</p></div>
+            <div class="post"><div class="av" style="background:#8BC6F5">D</div><p><span class="h">@dev_on_bikes</span>moved my group chat to huddle. it's what kindly used to be</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Market share bar</b> (Kindly vs Huddle vs others). Unlocks at Series A; in Act 1, Kindly is the underdog and "Ship a better feature" is the obvious move.</li>
+    <li><span class="n">2</span><b>Acquire &amp; sunset</b> is available from Series C, priced at about $40 per Huddle user (~$513M here, around 1:15). It is <b>paid in cash</b>, not stock, so no new shares are issued and the founder's voting math stays clean. It raises Retention, because users have nowhere else to go. Past acquisitions stay in History with the rival's name struck through.</li>
+  </ul>
+</section>
+
+<!-- 11 SECONDARY OFFER -->
+<section class="wf" id="s11">
+  <div class="label">Screen 11 · Modal · Act 2+ · after Series B</div>
+  <h2>Secondary sale offer</h2>
+  <p class="sub">The temptation that slowly takes control away from the founder. The second step of the hidden path is saying no.</p>
+  <div class="frame act2">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="overlay">
+      <div class="modal">
+        <h3>You've earned it 🥂</h3>
+        <p class="lede">Pebble Ventures would like to buy 2% of your shares. Sell 2% for $4,400,000?</p>
+        <div class="kv">
+          <span>You receive</span><b class="pos">▲ $4,400,000</b>
+          <span>Founder control <span class="pin">1</span></span><b>48.5% → 46.5%</b>
+        </div>
+        <p style="margin-top:12px;font-weight:800;font-size:12px">This unlocks <span class="pin">2</span></p>
+        <ul class="unlocks">
+          <li><b>Electric sports car</b> · $180k — <span class="eff">Find New User clicks ×2 ("networking")</span></li>
+          <li><b>Bay Area house</b> · $2.9M — <span class="eff">hiring 15% cheaper ("recruiting dinners")</span></li>
+        </ul>
+        <div class="btns"><span class="btn primary">Sell</span><span class="btn">Maybe later</span></div>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>The cost is shown honestly</b>, but next to a big cash number it's easy to ignore. Shown here at Series B values: founder control already slipped under 50% when Series B closed, the line that matters in Act 4, and each sale pushes it further away. A hidden-path player has to decline these and buy back shares to climb back over.</li>
+    <li><span class="n">2</span><b>Each unlock lists its in-game effect</b>, so selling looks like the smart move, not a vanity purchase.</li>
+  </ul>
+</section>
+
+<!-- 12 ACT 3 HOME -->
+<section class="wf" id="s12">
+  <div class="label">Screen 12 · Act 3 · ~1:45</div>
+  <h2>Act 3: the squeeze</h2>
+  <p class="sub">Gray creeps in. The button now says Convert User. NPS has been taken out of reporting. Support has been replaced by an AI, and the board has started buying things for you.</p>
+  <div class="frame act3">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, CEO</span><span>Year 6, Q3</span></div></div>
+    <nav class="tabs"><a class="on">A Glass Campus</a><a>The Team</a><a>The Market</a><a>Growth Lab</a><a>The Board Room</a><a>Your Life</a></nav>
+    <div class="dash">
+      <div class="col">
+        <div class="card" style="text-align:center">
+          <span class="pin abs">1</span>
+          <div class="stat">46.7M <small>users</small></div>
+          <div class="rate" style="color:var(--bad)">▼ −40 / sec · the peak is behind us</div>
+          <div class="split"><div><b>412k</b><span>Advertisers</span></div><div><b>1.3M</b><span>Sellers</span></div></div>
+          <div style="margin-top:10px"><span class="big-btn">Convert User</span></div>
+        </div>
+        <div class="card">
+          <span class="pin abs">2</span>
+          <h4>Health</h4>
+          <div class="gauges">
+            <div class="gauge dark" data-g="-41" data-min="-100" data-max="100" data-label="User NPS" data-fmt="signed"></div>
+            <div class="gauge" data-g="43" data-min="0" data-max="100" data-label="Board satisfaction"></div>
+          </div>
+          <div class="kv" style="margin-top:8px"><span>Our moat (retention)</span><b>94.6%</b><span>Team morale (eNPS)</span><b>+65</b></div>
+        </div>
+        <div class="card">
+          <span class="pin abs">3</span>
+          <h4>Support inbox</h4>
+          <div class="count" style="font-size:24px;font-weight:800">48,210 <small style="font-size:12px;color:var(--muted)">open</small></div>
+          <p class="fine" style="margin-top:2px">Support moved to Kindly Assistant (AI).</p>
+          <div style="margin-top:8px"><span class="sbtn off">Answer Ticket</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Money</h4>
+          <div class="chart" data-rev="106,150,187,210,228,270,308,340,368,382,390,394" data-cost="40,41,41,42,42,43,43,43,44,44,44,44" data-ymax="400" data-ylab="$400M" data-x0="Y5 Q4" data-x1="Y6 Q3" data-marks="3:Kindly for Business"></div>
+          <div class="kv" style="margin-top:8px">
+            <span>Revenue</span><b class="pos">$394M / mo</b>
+            <span>Costs</span><b>$44M / mo</b>
+            <span>Profit</span><b class="pos">+$350M / mo</b>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Optimize</h4>
+          <div class="upg">
+            <div class="u buy"><div><b>Synthetic Engagement</b><span>"AI friends that keep your feed lively."</span></div><div class="cost">$65M</div></div>
+            <div class="u buy"><div><b>Kindly Marketplace Fees+</b><span>"Simpler fees for sellers." Unlocks seller fee 30%.</span></div><div class="cost">$40M</div></div>
+            <div class="u owned"><div><b>Promoted Posts Everywhere ✓ <span class="badge board">BOARD-APPROVED</span></b><span>Approved on your behalf. Cannot be undone. <span class="pin">4</span></span></div></div>
+            <div class="u owned"><div><b>Kindly for Business ✓</b><span>Advertisers and sellers.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Board memos</h4>
+          <div class="memo"><div class="from">From: The Board · Reporting changes</div>
+            <p>Going forward, NPS will no longer be reported in board materials. We'll focus on the metrics that matter: revenue and our moat.</p>
+          </div>
+          <div class="memo" style="margin-top:8px"><div class="from">From: The Board · Initiative approved</div>
+            <p>To support your success, the board has approved the following initiative on your behalf: Promoted Posts Everywhere.</p>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Kindly feed</h4>
+          <div class="feed">
+            <div class="post biz"><div class="av" style="background:#C2A27A">B</div><p><span class="h">Bea's Bakery · business</span>our reach dropped 80% overnight. we have 12k followers and 40 people see our posts unless we pay</p></div>
+            <div class="post biz"><div class="av" style="background:#8FA7B8">P</div><p><span class="h">Pine &amp; Thread · seller</span>kindly fee went from 8% to 15% this year. we're raising prices again, sorry everyone</p></div>
+            <div class="post"><div class="av" style="background:#F59E8B">M</div><p><span class="h">@maya.k</span>grandma stopped posting. she says she can't find us in the feed anymore, just ads</p></div>
+            <div class="post"><div class="av" style="background:#9BD3A8">T</div><p><span class="h">@theo.makes</span>who is "Kindly Friend Ava" and why does she like all my photos</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker"><span class="tag">NEWS</span><span class="items">Kindly posts record quarter<em>•</em>Kindly users report frustration with new pricing<em>•</em>Small businesses say Kindly "pulled the rug"</span></div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Users are going down</b> for the first time, but Retention keeps the drop slow enough to ignore.</li>
+    <li><span class="n">2</span><b>The NPS gauge is dark and labelled "not reported."</b> The needle is a faint ghost. Retention is renamed "our moat." Team morale still reads +65 here, before the Year of Efficiency (Screen 13). The feed is now the only honest view.</li>
+    <li><span class="n">3</span><b>The inbox is still there, and useless.</b> A huge backlog, a note about the AI assistant, and a disabled Answer Ticket button: the first verb the player loses.</li>
+    <li><span class="n">4</span><b>BOARD-APPROVED</b> cards: bought for the player and impossible to undo.</li>
+  </ul>
+</section>
+
+<!-- 13 ACT 3 TEAM -->
+<section class="wf" id="s13">
+  <div class="label">Screen 13 · Act 3 · ~1:50</div>
+  <h2>The Team tab, under a board directive</h2>
+  <p class="sub">The board doesn't move people for you. You have to click [−] yourself. (Screen 12's "Support moved to Kindly Assistant" is the announcement; this is where the player carries it out.) The Year of Efficiency has already cut the perks and the first wave of staff.</p>
+  <div class="frame act3">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, CEO</span><span>Year 6, Q4</span></div></div>
+    <nav class="tabs"><a>A Glass Campus</a><a class="on">The Team</a><a>The Market</a><a>Growth Lab</a><a>The Board Room</a><a>Your Life</a></nav>
+    <div class="dash two">
+      <div class="col">
+        <div class="card">
+          <h4>Board directive <span class="pin">1</span></h4>
+          <div class="memo big"><div class="from">From: The Board · Operating plan</div>
+            <p>Reassign Support and Trust &amp; Safety to Ads by end of Q4.</p>
+            <span class="target">0 of 330 reassigned · ⏱ 2:30</span>
+          </div>
+          <p class="fine">Kindly Assistant (AI) will handle member questions going forward.</p>
+        </div>
+        <div class="card">
+          <h4>Teams</h4>
+          <div class="team-top">
+            <div class="count">Unassigned: 0</div>
+            <span class="sbtn off">Hiring freeze</span>
+          </div>
+          <div class="team-row"><span class="sw" style="background:var(--t-product)"></span><div><b>Product</b><span class="eff"><em>NPS +4</em> · outages fixed in ~2:10</span></div><div class="stepper"><span class="pm">−</span><b>260</b><span class="pm dim">+</span></div></div>
+          <div class="team-row"><span class="sw" style="background:var(--t-growth)"></span><div><b>Growth</b><span class="eff"><em>+60 users / sec</em> · market saturated</span></div><div class="stepper"><span class="pm">−</span><b>140</b><span class="pm dim">+</span></div></div>
+          <div class="team-row hi"><span class="sw" style="background:var(--t-support)"></span><div><b>Support</b><span class="eff"><em>answers 2,800 tickets / min</em> · NPS +5</span></div><div class="stepper"><span class="pm nudge">−</span><b>230</b><span class="pm dim">+</span></div></div>
+          <div class="team-row hi"><span class="sw" style="background:var(--t-tns)"></span><div><b>Trust &amp; Safety</b><span class="eff"><em>stops 70%</em> of scam and privacy events</span></div><div class="stepper"><span class="pm nudge">−</span><b>100</b><span class="pm dim">+</span></div><span class="pin abs" style="top:-8px;right:-8px">2</span></div>
+          <div class="team-row"><span class="sw" style="background:var(--t-sales)"></span><div><b>Sales</b><span class="eff"><em>signs 1,900 advertisers / day</em></span></div><div class="stepper"><span class="pm">−</span><b>480</b><span class="pm dim">+</span></div></div>
+          <div class="team-row"><span class="sw" style="background:var(--t-ads)"></span><div><b>Ads</b><span class="eff"><em>$0.41</em> ad revenue per user / mo</span></div><div class="stepper"><span class="pm">−</span><b>390</b><span class="pm dim">+</span></div></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Everyone at Kindly <span class="pin">3</span></h4>
+          <div class="stat">1,600 <small>people</small></div>
+          <div class="dots" data-teams="product:26,growth:14,support:23,tns:10,sales:48,ads:39" data-gone="27"></div>
+          <div class="legend" style="margin-top:8px"><span>1 dot = 10 people</span><span>◌ laid off (Year of Efficiency)</span></div>
+        </div>
+        <div class="card">
+          <h4><span>Team morale (eNPS) <span class="q">?</span></span><span class="pin">4</span></h4>
+          <div class="morale">
+            <div class="gauge" data-g="52" data-min="-100" data-max="100" data-label="eNPS" data-fmt="signed"></div>
+            <div>
+              <p style="font-weight:800;color:var(--bad)">▼ falling</p>
+              <p class="fine" style="margin:2px 0 0">+60 after the layoffs, heading for about +45. Multiplies every team's productivity (0.8×–1.2×).</p>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Perks <span class="pin">5</span></h4>
+          <div class="upg">
+            <div class="u cut"><div><b><s>Catered lunches</s></b><span>+12 morale · $800 per head / month</span><span class="cuttag">cancelled — Year of Efficiency</span></div></div>
+            <div class="u cut"><div><b><s>On-site gym</s></b><span>+5 morale · $300 per head / month</span><span class="cuttag">cancelled — Year of Efficiency</span></div></div>
+            <div class="u cut"><div><b><s>Company retreat</s></b><span>+15 morale for a while · $3k per head</span><span class="cuttag">cancelled — Year of Efficiency</span></div></div>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Kindly feed</h4>
+          <div class="feed">
+            <div class="post"><div class="av" style="background:#8BC6F5">D</div><p><span class="h">@dev_on_bikes</span>support used to answer in like an hour. a person. with a name</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>A directive, not an intervention.</b> The target and countdown work like revenue targets: the player decides whether to comply. If the player ignores it, Board satisfaction drops, and with founder control under 50% the board carries out the reassignment itself when the timer runs out (stamped BOARD-APPROVED, like its upgrades).</li>
+    <li><span class="n">2</span><b>The rows to cut are highlighted</b> and their [−] buttons glow. Each click moves one person (or ten) to unassigned; the player then has to click [+] on Ads. Complicity is two clicks per person.</li>
+    <li><span class="n">3</span><b>Dot grid at scale:</b> one dot per 10 people. Dashed dots are the Year of Efficiency layoffs.</li>
+    <li><span class="n">4</span><b>Morale is sliding.</b> It was +65 before the layoffs (Screen 12), +60 just after, and falls toward +45 as the perks disappear and the directive lands. Lower morale slows every team, so the cuts cost more than they save, quietly.</li>
+    <li><span class="n">5</span><b>Perks struck through</b>, each tagged "cancelled — Year of Efficiency". The player can't turn them back on during the directive.</li>
+  </ul>
+</section>
+
+<!-- 14 THE BOARD ROOM -->
+<section class="wf" id="s14">
+  <div class="label">Screen 14 · Act 3 · ~1:55</div>
+  <h2>The Board Room tab: cash sinks</h2>
+  <p class="sub">Kindly is now a cash machine, and the board has opinions about what to do with the cash. Neither option helps a single user, and both make the board happy.</p>
+  <div class="frame act3">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Jordan Reyes, CEO</span><span>Year 6, Q4</span></div></div>
+    <nav class="tabs"><a>A Glass Campus</a><a>The Team</a><a>The Market</a><a>Growth Lab</a><a class="on">The Board Room</a><a>Your Life</a></nav>
+    <div class="dash two">
+      <div class="col">
+        <div class="card">
+          <h4><span>Board satisfaction <span class="q">?</span></span><span class="pin">1</span></h4>
+          <div class="gauge" data-g="35" data-min="0" data-max="100" data-label="Board satisfaction"></div>
+          <p class="fine" style="text-align:center">▼ Falls a little every quarter. Hitting the target lifts it.</p>
+        </div>
+        <div class="card">
+          <h4>Quarterly target <span class="pin">2</span></h4>
+          <div class="memo"><div class="from">From: The Board · Q1 targets</div>
+            <p>Strong quarter, Jordan. The board expects continued momentum.</p>
+            <span class="target">Target: +25% on last quarter · $493M / mo · ⏱ 3:00</span>
+          </div>
+          <div class="kv" style="margin-top:10px"><span>Revenue now</span><b>$394M / mo</b><span>Last quarter's target</span><b>+20% · met</b></div>
+        </div>
+        <div class="card">
+          <h4>Board memos</h4>
+          <div class="memo"><div class="from">From: The Board · Capital allocation</div>
+            <p>Kindly holds more cash than it needs. The board would welcome a return of capital to shareholders.</p>
+          </div>
+          <div class="memo" style="margin-top:8px"><div class="from">From: Northlight Capital</div>
+            <p>Every serious platform has an AI strategy. What's ours?</p>
+          </div>
+          <div class="memo" style="margin-top:8px"><div class="from">From: The Board · Year of Efficiency</div>
+            <p>Thank you for the difficult decisions this year. The market has noticed.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Treasury</h4>
+          <div class="kv"><span>Cash</span><b>$1.04B</b><span>Profit</span><b class="pos">+$132M / mo</b><span>Founder ownership</span><b>33.4%</b></div>
+        </div>
+        <div class="card">
+          <h4>Return capital <span class="pin">3</span></h4>
+          <div style="border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px;display:grid;gap:8px">
+            <div><b style="font-size:13px">Special dividend</b><p class="fine" style="margin:0">Pay out nearly all spare cash to shareholders.</p></div>
+            <div class="kv"><span>Paid out</span><b>$974M</b><span>Founder receives</span><b class="pos">$325M</b><span>Board</span><b class="pos">+6</b></div>
+            <span class="sbtn" style="display:block">Return capital: special dividend</span>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Strategic initiatives <span class="pin">4</span></h4>
+          <div class="upg">
+            <div class="u"><div><b>AI moonshot <span class="badge hot">BOARD FAVORITE</span></b><span>"Kindly builds its own frontier model." Board loves it. Members won't notice.</span></div><div class="cost">$3B</div></div>
+          </div>
+          <p class="fine">Needs more cash than Kindly holds. Keep hitting targets.</p>
+        </div>
+        <div class="card">
+          <h4>Board seats</h4>
+          <div class="seat"><b>Jordan Reyes</b><span>Founder · CEO</span></div>
+          <div class="seat"><b>Pebble Ventures</b><span>Seed</span></div>
+          <div class="seat"><b>Northlight Capital</b><span>Series A</span></div>
+          <div class="seat"><b>Late-stage investor</b><span>Series C</span></div>
+          <div class="seat"><b>Independent director</b><span>Series B</span></div>
+          <div class="control">Founder control: 33.4%</div>
+          <div class="bar fifty"><i style="width:33.4%"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker"><span class="tag">NEWS</span><span class="items">Kindly announces special dividend<em>•</em>Analysts cheer Kindly's "capital discipline"<em>•</em>Kindly members say the app "feels empty"</span></div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Board satisfaction</b> gets its own tab, with a "?" popup. Around 35 here: high revenue isn't enough, because expectations rise every quarter.</li>
+    <li><span class="n">2</span><b>The target ratchets.</b> By Act 3 every quarter must beat the last by +25%. The countdown works like the Act 2 targets.</li>
+    <li><span class="n">3</span><b>Special dividends are the Act 3 cash sink.</b> Each one pays out spare cash to shareholders; the founder gets a share in line with ownership (33.4% of $974M ≈ $325M), so Net Worth jumps. The board loves them (+6 each). The cash is gone, which is exactly what Ashgrove will notice.</li>
+    <li><span class="n">4</span><b>AI moonshot ($3B)</b>, the other cash sink: a huge, board-pleasing bet that does nothing for members. Shown out of reach to keep the player chasing revenue targets.</li>
+  </ul>
+</section>
+
+<!-- 15 BUYOUT OFFER -->
+<section class="wf" id="s15">
+  <div class="label">Screen 15 · Modal · ~2:00</div>
+  <h2>The buyout offer</h2>
+  <p class="sub">Shown with all three buttons for reference. Most players only ever see two.</p>
+  <div class="frame act3">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="overlay" style="min-height:520px">
+      <div class="modal">
+        <p class="kicker">Confidential</p>
+        <h3>Ashgrove Equity Partners</h3>
+        <p class="lede">Ashgrove would like to acquire Kindly, Inc. and take it private.</p>
+        <div class="kv">
+          <span>Enterprise value</span><b>$13.8B</b>
+          <span>Financed with debt <span class="pin">1</span></span><b>$9.7B</b>
+          <span>Your payout</span><b class="pos">$4.62B</b>
+          <span>Your control</span><b>33.4%</b>
+        </div>
+        <div class="btns">
+          <span class="btn primary">Accept</span>
+          <span class="btn">Refuse</span> <span class="pin">2</span>
+        </div>
+        <div class="btns" style="margin-top:8px"><span class="btn trust">Transfer Kindly to a Members' Trust</span></div>
+        <p class="fine" style="text-align:center">Only appears with founder control over 50% and NPS above 0. <span class="pin">3</span></p>
+      </div>
+    </div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>The debt line</b> is the whole leveraged buyout in one number. The "?" explains that the debt goes onto Kindly, not onto Ashgrove.</li>
+    <li><span class="n">2</span><b>Refuse</b> triggers an on-screen board vote that the founder loses (33.4% control). The deal closes anyway, and the payout still arrives.</li>
+    <li><span class="n">3</span><b>The hidden third button.</b> In the real game it simply isn't there unless the conditions are met. There's no grayed-out version to give it away.</li>
+  </ul>
+</section>
+
+<!-- 16 ACT 4 -->
+<section class="wf" id="s16">
+  <div class="label">Screen 16 · Act 4 · ~2:14</div>
+  <h2>An Empty Floor: the dismantling</h2>
+  <p class="sub">Monochrome. Tabs and panels are sold off one by one. Your Life is never sold, and Collect Earnout is the only thing left to click.</p>
+  <div class="frame act4">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>A portfolio company of Ashgrove Equity Partners</span><span>Year 7</span></div></div>
+    <nav class="tabs"><a class="on">An Empty Floor</a><a class="soldtab"><s>The Team</s><span class="soldtag">sold</span></a><a class="soldtab"><s>The Market</s><span class="soldtag">sold</span></a><a class="soldtab"><s>Growth Lab</s><span class="soldtag">sold</span></a><a class="soldtab"><s>The Board Room</s><span class="soldtag">sold</span></a><a class="lifetab">Your Life</a><span class="pin">1</span></nav>
+    <div class="dash">
+      <div class="col">
+        <div class="card" style="text-align:center">
+          <span class="pin abs">2</span>
+          <div class="stat">38.9M <small>users</small></div>
+          <div style="margin-top:10px"><span class="big-btn disabled">Asset sold</span></div>
+        </div>
+        <div class="sold"><span class="stamp">Asset sold</span><small>Health · divested</small></div>
+        <div class="sold"><span class="stamp">Outsourced</span><small>Support inbox · Kindly Assistant (AI), licensed</small></div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Money</h4>
+          <div class="chart" data-rev="394,385,375,287,211,159,125,102" data-cost="44,140,134,150,165,190,205,208" data-ymax="450" data-ylab="$450M" data-x0="Y6 Q4" data-x1="Y7 Q1" data-marks="1:buyout · +$9.7B debt"></div>
+          <div class="kv" style="margin-top:8px">
+            <span>Debt</span><b>$13.8B</b>
+            <span>Interest (14%)</span><b class="neg">−$161M / mo</b>
+            <span>Management fees</span><b class="neg">−$35M / mo</b>
+            <span>Revenue</span><b>$102M / mo</b>
+            <span>Profit</span><b class="neg">−$106M / mo</b>
+          </div>
+        </div>
+        <div class="sold" style="min-height:150px"><span class="stamp">Asset sold</span><small>Build · divested to a strategic partner</small></div>
+        <div class="card">
+          <h4>Memo</h4>
+          <div class="memo"><div class="from">From: Ashgrove Equity Partners</div><p>As part of Kindly's next chapter, the Kindly feed will be sunset on Friday. We thank our community for their years of memories.</p></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="sold" style="min-height:140px"><span class="stamp">Sunset</span><small>Kindly feed</small></div>
+        <div class="card founder-live">
+          <h4>Your Life <span class="pin">3</span></h4>
+          <div class="stat">$4,970,000,000</div>
+          <div class="life"><span class="own">Bay Area house</span><span class="own">Vineyard</span><span class="own">Yacht</span><span class="own">NZ bunker</span><span class="own">A newspaper</span><span class="own">Private island</span><span class="own">Suborbital flight</span><span>A sports team · $2B</span></div>
+          <div style="margin-top:12px"><span class="btn primary" style="display:block">Collect Earnout · +$77M</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker wrap"><span class="tag">NEWS</span><span class="items">Kindly lays off another 600 as Ashgrove "streamlines"<em>•</em><i>"Visionary founder Jordan Reyes on the next chapter"</i><span class="owner">The Bay Ledger · owned by Jordan Reyes</span> <span class="pin">4</span><em>•</em>Kindly data sold to "trusted partners"</span></div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Tabs get sold.</b> Each sale strikes the tab through, adds a small "sold" tag and disables it, with a press-release memo. Your Life stays, in blue.</li>
+    <li><span class="n">2</span><b>The main button</b> is gray and stamped. It was the first thing the player ever clicked.</li>
+    <li><span class="n">3</span><b>Your Life is the only panel still in color</b> (Act 1 blue) and the only one with a live button. Clicking it just makes the number bigger: billions now. After the NZ bunker the lifestyle ladder turns absurd: A newspaper ($250M), Private island ($300M), Suborbital flight ($450M) and A sports team ($2B), still for sale here.</li>
+    <li><span class="n">4</span><b>Owning the newspaper turns one headline flattering.</b> Among the bad news, one ticker item praises the founder, tagged in tiny type "The Bay Ledger · owned by Jordan Reyes". It appears only if the player bought the newspaper.</li>
+  </ul>
+</section>
+
+<!-- 17 MAIN ENDING -->
+<section class="wf" id="s17">
+  <div class="label">Screen 17 · Ending</div>
+  <h2>Main ending</h2>
+  <p class="sub">Everything is gone except the number and the logo. Nothing left to click.</p>
+  <div class="frame act4">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="center-screen" style="min-height:520px">
+      <div style="max-width:620px">
+        <div class="logo" style="justify-content:center;margin-bottom:22px"><div class="mark">k</div>kindly</div>
+        <p class="fine" style="text-transform:uppercase;letter-spacing:.12em">Jordan Reyes · net worth</p>
+        <div class="networth">$3,490,000,000 <span class="pin">1</span></div>
+        <div class="life" style="justify-content:center;margin-top:14px"><span class="own">Bay Area house</span><span class="own">Vineyard</span><span class="own">Yacht</span><span class="own">NZ bunker</span><span class="own">A newspaper</span><span class="own">Private island</span><span class="own">Suborbital flight</span><span class="own">A sports team</span></div>
+        <div class="ending-post"><div class="post"><div class="av" style="background:#9a9a9a">M</div><p><span class="h">@maya.k · last post</span>does anyone have a way to get photos off this thing? grandma's account is gone. those were the only pictures</p></div></div>
+        <p class="fine" style="margin-top:26px">Peak users 46.7M · Peak staff 1,874 · Laid off 1,829 · Time played 2h 20m</p>
+      </div>
+    </div>
+    <div class="ticker wrap"><span class="tag">NEWS</span><span class="items">Jordan Reyes walks away with $4.6 billion as 1,829 Kindly employees are laid off<em>•</em>Kindly files for Chapter 11<em>•</em><i>"Visionary founder Jordan Reyes on the next chapter"</i><span class="owner">The Bay Ledger · owned by Jordan Reyes</span> <span class="pin">2</span><em>•</em>Opinion: The founder who killed Kindly</span></div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>Net worth is lower than the $4.62B payout</b> because the founder just bought a sports team ($2B); earnouts and the advisory fee make up part of the gap. Every lifestyle item owned is shown below the number.</li>
+    <li><span class="n">2</span><b>The newspaper's headline</b> runs among the last ones, tagged "The Bay Ledger · owned by Jordan Reyes". Without the newspaper, the ticker is only the three bad headlines.</li>
+  </ul>
+</section>
+
+<!-- 18 HIDDEN ENDING -->
+<section class="wf" id="s18">
+  <div class="label">Screen 18 · Hidden ending</div>
+  <h2>Members' Trust</h2>
+  <p class="sub">The calm blue comes back. The company is small, the buttons still work, and the game can go on forever.</p>
+  <div class="frame">
+    <div class="chrome"><i></i><i></i><i></i><span>kindly.game</span></div>
+    <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Owned by its members</span><span>Year 10</span></div></div>
+    <nav class="tabs"><a class="on">A Small Office</a><a>The Team</a><a>The Market</a><a>Your Life</a><span class="pin">2</span></nav>
+    <div class="dash">
+      <div class="col">
+        <div class="card" style="text-align:center">
+          <span class="pin abs">1</span>
+          <div class="stat">35.6M <small>members</small></div>
+          <div style="margin-top:10px"><span class="big-btn">Welcome someone</span></div>
+        </div>
+        <div class="card"><h4>Happiness</h4><div class="gauge" data-g="44" data-min="-100" data-max="100" data-label="NPS" data-fmt="signed"></div></div>
+        <div class="card">
+          <h4>Support inbox</h4>
+          <div class="inbox-head"><div class="count">6 <small>open tickets</small></div><span class="sbtn">Answer Ticket</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Kindly Members' Trust</h4>
+          <p style="font-size:14px;font-weight:700">"Help people stay close to the people they love."</p>
+          <p class="fine">Charter adopted Year 7. Kindly cannot be sold.</p>
+          <div class="kv" style="margin-top:10px"><span>Profit</span><b class="pos">+$1.1M / mo</b><span>Team</span><b>700</b></div>
+          <div class="dots" data-teams="product:22,growth:6,support:24,tns:14,sales:4"></div>
+          <div class="legend" style="margin-top:6px"><span>1 dot = 10 people</span></div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <h4>Kindly feed</h4>
+          <div class="feed">
+            <div class="post"><div class="av" style="background:#F59E8B">M</div><p><span class="h">@maya.k</span>ten years on kindly today. grandma's first post still pinned at the top ☀️</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Your Life</h4>
+          <div class="kv"><span>Net worth</span><b>$2.1M</b></div>
+          <div class="life"><span class="own">Studio apartment</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="ticker"><span class="tag">NEWS</span><span class="items">Kindly tops Best Places to Work for third year<em>•</em>Kindly users: "It still feels like the early days"<em>•</em>Founder of user-owned Kindly, Jordan Reyes, says life has never been better</span></div>
+  </div>
+  <ul class="notes">
+    <li><span class="n">1</span><b>The button changes one last time</b>, to the gentlest label in the game: Welcome someone.</li>
+    <li><span class="n">2</span><b>Tabs come back</b>, minus Growth Lab and The Board Room. The home tab gets a new, modest name: A Small Office.</li>
+  </ul>
+</section>
+
+<!-- 19 PHONE -->
+<section class="wf" id="s19">
+  <div class="label">Screen 19 · Phone</div>
+  <h2>Phone layout</h2>
+  <p class="sub">The same panels in a single column. Decided: the tabs stay a scrollable text row at the top, closest to A Dark Room. (A bottom nav was considered and rejected.)</p>
+  <div class="row">
+    <div style="flex:0 1 340px">
+      <div class="caption">Home tab</div>
+      <div class="frame act2 phone">
+        <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Y4 Q2</span></div></div>
+        <nav class="tabs"><a class="on">A Glass Campus</a><a>The Team</a><a>The Market</a><a>Growth Lab</a><a>The Board Room</a><a>Your Life</a></nav>
+        <div class="dash">
+          <div class="card" style="text-align:center">
+            <div class="stat">22.9M <small>users</small></div>
+            <div style="margin-top:10px"><span class="big-btn">Find New User</span></div>
+          </div>
+          <div class="card"><div class="gauges">
+            <div class="gauge" data-g="-5" data-min="-100" data-max="100" data-label="User NPS" data-fmt="signed"></div>
+            <div class="gauge" data-g="57" data-min="0" data-max="100" data-label="Board"></div>
+          </div></div>
+          <div class="card"><h4>Support inbox</h4><div class="inbox-head"><div class="count">1,204 <small>open</small></div><span class="sbtn">Answer Ticket</span></div></div>
+        </div>
+        <div class="ticker"><span class="tag">NEWS</span><span class="items">Jordan Reyes named to 30 Under 30</span></div>
+      </div>
+    </div>
+    <div style="flex:0 1 340px">
+      <div class="caption">Growth Lab tab · row scrolled</div>
+      <div class="frame act2 phone">
+        <div class="topbar"><div class="logo"><div class="mark">k</div>kindly</div><div class="meta"><span>Y4 Q2</span></div></div>
+        <nav class="tabs"><a>The Market</a><a class="on">Growth Lab</a><a>The Board Room</a><a>Your Life</a></nav>
+        <div class="dash">
+          <div class="card">
+            <h4>Levers</h4>
+            <div class="lever">
+              <div class="lv-head"><b>Kindly+ price</b><span class="val">$4.99</span></div>
+              <div class="steps" style="--n:5"><span>$2.99</span><span class="on">$4.99</span><span>$6.99</span><span>$9.99</span><span>$14.99</span></div>
+              <div class="fx"><span class="now pos">▲ +$9M / mo</span><span class="later">NPS ▼ slowly</span></div>
+            </div>
+          </div>
+          <div class="card"><h4>New test</h4><div class="test-title">Test #14 · Cancel button</div><div class="btns" style="margin-top:6px"><span class="sbtn ghost" style="flex:1">Ship A</span><span class="sbtn" style="flex:1">Ship B</span><span class="sbtn off" style="flex:1">Skip</span></div></div>
+        </div>
+        <div class="ticker"><span class="tag">NEWS</span><span class="items">Kindly+ subscriptions top 4 million</span></div>
+      </div>
+    </div>
+    <ul class="notes" style="margin-top:0">
+      <li><span class="n">·</span><b>Scrollable tab row (decided).</b> It keeps the A Dark Room feel and the long tab names, including the renamed home tab. The row scrolls sideways inside the app (never the page), keeps the active tab in view, and fades at the edge to show there's more.</li>
+      <li><span class="n">·</span><b>Rejected: bottom nav.</b> Easier to reach with a thumb, but it needs short labels and a "More" item, which loses the home-tab renaming joke.</li>
+      <li><span class="n">·</span><b>Home tab order on phone:</b> main button, alert, inbox, gauges, money, build, experiment, memos, feed.</li>
+      <li><span class="n">·</span><b>The ticker</b> stays pinned to the bottom of the screen.</li>
+      <li><span class="n">·</span><b>Modals and events</b> become full-width sheets that slide up from the bottom.</li>
+    </ul>
+  </div>
+</section>
+
+<footer style="max-width:1280px;margin:0 auto;padding:30px 16px 60px;color:var(--page-muted);font-size:.85rem">
+  Kindly wireframes v3 · October 21, 2026 · All companies, people and firms are fictional.
+</footer>
+
+<script>
+  // Semicircle gauges: green on the right, red on the left.
+  function arc(cx, cy, r, a0, a1) {
+    const p = a => [cx + r * Math.cos(a), cy - r * Math.sin(a)];
+    const [x0, y0] = p(a0), [x1, y1] = p(a1);
+    return `M ${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1}`;
+  }
+  document.querySelectorAll('.gauge').forEach(g => {
+    const v = +g.dataset.g, min = +g.dataset.min, max = +g.dataset.max;
+    const t = (v - min) / (max - min);
+    const ang = Math.PI * (1 - t);
+    const cx = 60, cy = 58, r = 46;
+    const nx = cx + (r - 8) * Math.cos(ang), ny = cy - (r - 8) * Math.sin(ang);
+    const col = t < 0.33 ? 'var(--bad)' : t < 0.6 ? 'var(--warn)' : 'var(--good)';
+    g.innerHTML = `
+      <svg viewBox="0 0 120 66" aria-hidden="true">
+        <path d="${arc(cx, cy, r, Math.PI, 0)}" stroke="var(--line)" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="${arc(cx, cy, r, Math.PI, ang)}" stroke="${col}" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <line x1="${cx}" y1="${cy}" x2="${nx}" y2="${ny}" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="${cx}" cy="${cy}" r="4" fill="var(--ink)"/>
+      </svg>
+      <div class="gv">${g.dataset.fmt === 'signed' && v > 0 ? '+' : ''}${v}</div>
+      <div class="gl">${g.dataset.label}</div>`;
+  });
+
+  // Staff dots, colored by team. data-teams="product:8,growth:6,idle:3", data-gone = laid off (dashed).
+  document.querySelectorAll('.dots').forEach(d => {
+    const out = [];
+    (d.dataset.teams || '').split(',').filter(Boolean).forEach(pair => {
+      const [team, n] = pair.split(':');
+      for (let i = 0; i < +n; i++) out.push(team === 'idle' ? '<i class="idle"></i>' : `<i style="background:var(--t-${team})"></i>`);
+    });
+    for (let i = 0; i < +(d.dataset.gone || 0); i++) out.push('<i class="gone"></i>');
+    d.innerHTML = out.join('');
+  });
+
+  // Money charts: revenue vs costs, gap shaded (profit = --good, loss = --loss). Inline SVG.
+  document.querySelectorAll('.chart').forEach(el => {
+    const rev = el.dataset.rev.split(',').map(Number), cost = el.dataset.cost.split(',').map(Number);
+    const n = cost.length, ymax = +el.dataset.ymax, noRev = !!el.dataset.norev;
+    const W = 320, H = 132, pl = 36, pr = 8, pt = 18, pb = 18;
+    const x = i => pl + i * (W - pl - pr) / (n - 1);
+    const y = v => pt + (H - pt - pb) * (1 - v / ymax);
+    let areas = '';
+    const poly = (pts, profit) => `<polygon points="${pts.map(p => p.join(',')).join(' ')}" fill="var(${profit ? '--good' : '--loss'})" fill-opacity=".22"/>`;
+    for (let i = 0; i < n - 1; i++) {
+      const d0 = rev[i] - cost[i], d1 = rev[i + 1] - cost[i + 1];
+      if (d0 * d1 >= 0) {
+        areas += poly([[x(i), y(rev[i])], [x(i + 1), y(rev[i + 1])], [x(i + 1), y(cost[i + 1])], [x(i), y(cost[i])]], d0 + d1 > 0);
+      } else {
+        const t = d0 / (d0 - d1), xc = x(i) + t * (x(i + 1) - x(i)), vc = rev[i] + t * (rev[i + 1] - rev[i]);
+        areas += poly([[x(i), y(rev[i])], [xc, y(vc)], [x(i), y(cost[i])]], d0 > 0);
+        areas += poly([[xc, y(vc)], [x(i + 1), y(rev[i + 1])], [x(i + 1), y(cost[i + 1])]], d1 > 0);
+      }
+    }
+    const line = arr => arr.map((v, i) => `${x(i)},${y(v)}`).join(' ');
+    let marks = '';
+    (el.dataset.marks || '').split('|').filter(Boolean).forEach((m, k) => {
+      const [i, label] = m.split(/:(.+)/);
+      const xm = x(+i), anchor = +i > n * 0.6 ? 'end' : 'start';
+      marks += `<line x1="${xm}" y1="${pt - 4}" x2="${xm}" y2="${H - pb}" stroke="var(--ink)" stroke-opacity=".35" stroke-dasharray="2 3"/>
+        <text x="${xm + (anchor === 'end' ? -3 : 3)}" y="${pt - 6 + k * 0}" font-size="9" font-weight="700" fill="var(--ink)" text-anchor="${anchor}">${label}</text>`;
+    });
+    el.innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Revenue and costs per month">
+        <line x1="${pl}" y1="${y(0)}" x2="${W - pr}" y2="${y(0)}" stroke="var(--line)"/>
+        <line x1="${pl}" y1="${y(ymax)}" x2="${W - pr}" y2="${y(ymax)}" stroke="var(--line)" stroke-dasharray="2 3"/>
+        <text x="${pl - 4}" y="${y(ymax) + 3}" font-size="9" fill="var(--muted)" text-anchor="end">${el.dataset.ylab}</text>
+        <text x="${pl - 4}" y="${y(0) + 3}" font-size="9" fill="var(--muted)" text-anchor="end">$0</text>
+        <text x="${pl}" y="${H - 4}" font-size="9" fill="var(--muted)">${el.dataset.x0}</text>
+        <text x="${W - pr}" y="${H - 4}" font-size="9" fill="var(--muted)" text-anchor="end">${el.dataset.x1}</text>
+        ${areas}
+        ${noRev ? '' : `<polyline points="${line(rev)}" fill="none" stroke="var(--good)" stroke-width="2.2" stroke-linejoin="round"/>`}
+        <polyline points="${line(cost)}" fill="none" stroke="var(--bad)" stroke-width="2" stroke-dasharray="5 3" stroke-linejoin="round"/>
+        ${marks}
+      </svg>
+      <div class="legend">
+        ${noRev ? '<span>Revenue: none yet</span>' : '<span><i style="border-color:var(--good)"></i>Revenue</span>'}
+        <span><i class="lndash" style="border-color:var(--bad)"></i>Costs</span>
+        ${noRev ? '' : '<span><i class="box" style="background:var(--good);opacity:.35"></i>Profit</span>'}
+        <span><i class="box" style="background:var(--loss);opacity:.35"></i>${noRev ? 'Burn' : 'Loss'}</span>
+      </div>`;
+  });
+</script>
+</body>
+</html>

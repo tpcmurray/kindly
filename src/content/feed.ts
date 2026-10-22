@@ -13,7 +13,7 @@ const BASE_POSTS: PostDef[] = [
   { id: 'a1_invite', act: 1, text: 'sent kindly invites to my whole group chat. sorry not sorry', after: 'invite', priority: true },
   { id: 'a1_onboard', act: 1, text: 'signing up took like 20 seconds. my dad did it by himself!!', after: 'onboarding', priority: true },
   { id: 'p12', act: 1, text: 'someone from kindly support actually answered me. a human!', after: 'inbox', priority: true },
-  { id: 'p11', act: 1, text: 'uploads broke for a sec. still love you kindly', after: 'firstOutage', priority: true },
+  { id: 'p11', act: 1, text: 'uploads broke for a sec. still love you kindly', after: 'outageFixed', priority: true },
   { id: 'a1_seed', act: 1, text: 'kindly raised money?? good for them. please don\'t get weird', handle: 'dev_on_bikes', after: 'seed', priority: true },
   { id: 'p4', act: 1, text: 'the photo albums feature is so good. put our whole trip in one place', handle: 'theo.makes', after: 'albums', priority: true },
   { id: 'p6', act: 1, text: 'dark mode!!! thank you kindly people', after: 'darkmode', priority: true },

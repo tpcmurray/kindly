@@ -29,6 +29,7 @@ export function condOk(s: State, c: Cond): boolean {
   if (c.notFlag && s.flags.includes(c.notFlag)) return false;
   if (c.minRound !== undefined && s.rounds < c.minRound) return false;
   if (c.usersMin !== undefined && users(s) < c.usersMin) return false;
+  if (c.outage !== undefined && !!s.outage !== c.outage) return false;
   return true;
 }
 

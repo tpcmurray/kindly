@@ -257,6 +257,7 @@ function newOutage(s: State, autoAt: number): NonNullable<State['outage']> {
 
 export function resolveOutage(s: State): void {
   s.outage = null;
+  fire(s, 'outageFixed');
   s.nextOutageAt = s.t + C.OUTAGE_MEAN_GAP * (1 + s.team.product / 10) * between(s, 0.6, 1.4);
 }
 

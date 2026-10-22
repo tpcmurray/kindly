@@ -63,7 +63,7 @@ body.act2 .tabs button.on { text-decoration-color: var(--accent); }
 .tabs button.lifetab { color: var(--brand); }
 
 /* ---------- layout ---------- */
-.dash { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 12px; padding: 12px; max-width: 1400px; margin: 0 auto; padding-bottom: 60px; }
+.dash { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 12px; padding: 12px; max-width: 1400px; margin: 0 auto; }
 .dash.two { grid-template-columns: 1.2fr 1fr; }
 .col { display: grid; gap: 12px; align-content: start; min-width: 0; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px; position: relative; min-width: 0; animation: reveal .6s ease both; }
@@ -243,7 +243,7 @@ body.act3 .tet, body.act3 .code .slot { filter: saturate(.35); }
 .owned-list b { color: var(--ink); font-weight: 700; }
 .chips span { border: 1px solid var(--line); border-radius: 8px; padding: 3px 7px; font-size: 11px; background: var(--accent-soft); font-weight: 700; }
 
-.ticker { position: fixed; left: 0; right: 0; bottom: 0; border-top: 1px solid var(--line); background: var(--card); padding: 8px 12px; display: flex; gap: 10px; align-items: center; overflow: hidden; white-space: nowrap; z-index: 5; }
+.ticker { max-width: 1376px; width: calc(100% - 24px); margin: 0 auto 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); padding: 8px 12px; display: flex; gap: 10px; align-items: center; overflow: hidden; white-space: nowrap; box-sizing: border-box; }
 .ticker .tag { font: 700 10px 'JetBrains Mono', monospace; background: var(--ink); color: var(--card); padding: 2px 6px; border-radius: 4px; flex: none; }
 .ticker .track { overflow: hidden; flex: 1; position: relative; }
 .ticker .items { display: inline-block; animation: marquee 70s linear infinite; }

@@ -31,6 +31,7 @@ export interface Cond {
   notFlag?: string;
   minRound?: number;                 // funding rounds closed
   usersMin?: number;
+  outage?: boolean;                  // true: only while something is broken; false: only while it isn't
 }
 
 export interface UpgradeDef {

@@ -140,6 +140,7 @@ export function check(s: State, a: Action): Result {
       return s.cash >= rivalPrice(s, 'porch') ? OK : no('not enough cash');
     case 'competeFeature':
       if (s.rounds < 2 || !s.rival.active || s.rival.acquired || s.act > 3) return no('unavailable');
+      if (s.rival.share < 0.01) return no('Huddle is too small to matter');
       if ((s.beats['lastCompete'] ?? -1e9) > s.t - 60) return no('the team is still shipping');
       return s.cash >= competeCost(s) ? OK : no('not enough cash');
     case 'buyLifestyle': {

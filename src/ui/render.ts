@@ -236,9 +236,10 @@ function renderMarket(v: View): string {
   const seg = (share: number, label: string, color: string) => share > 0.004 ? `<i style="width:${(share * 100).toFixed(1)}%;background:${color}">${share > 0.08 ? label : ''}</i>` : '';
   const h = m.huddle;
   const huddle = h ? `<div class="card"><h4>Rival</h4><div class="rival"><div class="rlogo">h</div><div style="flex:1"><b>Huddle</b>${h.acquired ? ' <span class="fine">— acquired &amp; sunset</span>' : `<div class="fine" style="margin:0">${fmtN(h.users)} users and growing</div>`}</div></div>
-    ${h.acquired ? '' : `<div class="btns"><button class="btn" ${act({ type: 'competeFeature' })} ${h.canCompete ? '' : 'disabled'}>Ship a better feature · ${money(h.competeCost)}</button>
+    ${h.acquired ? '' : `<div class="btns"><button class="btn" ${act({ type: 'competeFeature' })} ${h.canCompete ? '' : 'disabled'}>${h.competeWait > 0 ? `Shipping… ${h.competeWait}s` : `Ship a better feature · ${money(h.competeCost)}`}</button>
     <button class="btn primary" ${act({ type: 'acquire', rival: 'huddle' })} ${h.canAcquire ? '' : 'disabled'}>Acquire &amp; sunset · ${money(h.price)} cash</button></div>
-    <div class="fine">${h.acquireLocked ? 'Acquisitions open after the Series C.' : 'Sunsetting Huddle moves part of its users to Kindly. They\'ll have nowhere else to go.'}</div>`}</div>` : '';
+    <div class="fine">${h.competeTiny ? 'Better feature: Huddle is too small to matter yet.' : 'Better feature: wins back 1% of the market from Huddle, so Kindly has more room to grow. The team needs a minute between features.'}</div>
+    <div class="fine">${h.acquireLocked ? 'Acquire: opens after the Series C.' : 'Acquire: sunsetting Huddle moves part of its users to Kindly. They\'ll have nowhere else to go.'}</div>`}</div>` : '';
   const p = m.porch;
   const porch = p ? `<div class="card"><h4>New rival</h4><div class="rival"><div class="rlogo" style="background:#2E7D6B">p</div><div style="flex:1"><b>Porch</b>${p.acquired ? ' <span class="fine">— acquired &amp; sunset</span>' : `<div class="fine" style="margin:0">Started by unhappy Kindly users · ${fmtN(p.users)} users</div>`}</div></div>
     ${p.acquired ? '' : `<div class="btns"><button class="btn primary" ${act({ type: 'acquire', rival: 'porch' })} ${p.canAcquire ? '' : 'disabled'}>Acquire &amp; sunset · ${money(p.price)} cash</button></div>`}</div>` : '';

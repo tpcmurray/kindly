@@ -67,7 +67,7 @@ export interface View {
   market: null | {
     sold: boolean;
     share: { kindly: number; huddle: number; porch: number; other: number };
-    huddle: { users: number; acquired: boolean; price: number; canAcquire: boolean; acquireLocked: boolean; canCompete: boolean; competeCost: number } | null;
+    huddle: { users: number; acquired: boolean; price: number; canAcquire: boolean; acquireLocked: boolean; canCompete: boolean; competeCost: number; competeWait: number; competeTiny: boolean } | null;
     porch: { users: number; acquired: boolean; price: number; canAcquire: boolean } | null;
     advertisers: number | null; sellers: number | null;
   };
@@ -230,6 +230,7 @@ export function buildView(s: State): View {
       users: s.rival.acquired ? 0 : hU, acquired: s.rival.acquired, price: rivalPrice(s, 'huddle'),
       canAcquire: check(s, { type: 'acquire', rival: 'huddle' }).ok, acquireLocked: s.rounds < 4,
       canCompete: check(s, { type: 'competeFeature' }).ok, competeCost: competeCost(s),
+      competeWait: Math.max(0, Math.ceil((s.beats['lastCompete'] ?? -1e9) + 60 - s.t)), competeTiny: s.rival.share < 0.01,
     } : null,
     porch: s.porch.active ? { users: pU, acquired: s.porch.acquired, price: rivalPrice(s, 'porch'), canAcquire: check(s, { type: 'acquire', rival: 'porch' }).ok } : null,
     advertisers: main.advertisers, sellers: main.sellers,

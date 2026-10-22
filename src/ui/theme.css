@@ -276,6 +276,7 @@ body.act3 .tet, body.act3 .code .slot { filter: saturate(.35); }
 .btn.primary { background: var(--accent); color: #fff; border-color: transparent; }
 .btn.huge { padding: 16px; font-size: 17px; box-shadow: 0 4px 0 var(--btn-shadow); }
 .btn.trust { background: #23845A; color: #fff; border-color: transparent; }
+.btn:disabled, .btn.primary:disabled, .btn.trust:disabled { background: var(--line); color: var(--muted); border-color: transparent; box-shadow: none; }
 .quiet { font-size: 11px; color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
 .fine { font-size: 10.5px; color: var(--muted); margin-top: 6px; }
 .amend { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; }

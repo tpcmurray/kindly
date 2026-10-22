@@ -13,7 +13,7 @@ import { KEY_BEATS } from '../sim/run';
 
 const BEATS = new Set([
   ...KEY_BEATS, 'layoff', 'outageFixed', 'quarterTarget', 'targetMissed', 'intervention', 'interventionFailed', 'directiveMissed', 'divest', 'dividend',
-  'secondarySold', 'offerRaised', 'retreat', 'repurchase', 'lastCompete',
+  'secondarySold', 'secondarySold_1', 'secondarySold_2', 'secondarySold_3', 'offerRaised', 'retreat', 'repurchase', 'lastCompete',
   ...['lunches', 'gym'].map(p => 'perk_' + p), ...LIFESTYLE.map(l => 'life_' + l.id),
   ...['price', 'adLoad', 'notif', 'sellerFee', 'reach', 'data'].map(l => 'lever_' + l),
   ...['valuation', 'more', 'observer', 'dualclass'].map(a => 'amend_' + a),

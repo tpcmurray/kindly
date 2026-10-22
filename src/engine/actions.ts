@@ -218,7 +218,6 @@ export function apply(s: State, a: Action): Result {
         if (u.flag === 'biz' || u.flag === 'market' || u.flag === 'data') { markTab(s, 'lab'); markTab(s, 'market'); }
       }
       fire(s, u.id);
-      if (u.id === 'kindlyplus') fire(s, 'kindlyplus');
       break;
     }
     case 'toggleAmendments':
@@ -258,6 +257,7 @@ export function apply(s: State, a: Action): Result {
       if (a.accept) {
         sellSecondary(s.cap); s.founder.netWorth += m.amount; s.founder.secondaries++;
         fire(s, 'secondarySold');
+        fire(s, 'secondarySold_' + m.round);
       } else s.founder.declined++;
       closeModal(s);
       markTab(s, 'life');

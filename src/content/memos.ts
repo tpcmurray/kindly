@@ -19,8 +19,12 @@ export const MEMOS: MemoDef[] = [
     text: 'We\'re happy to bridge you to the next round. Founders should focus on building, not payroll. The note converts at a modest discount.' },
   { id: 'm_a', on: 'seriesA', from: 'Northlight Capital', subject: 'Congratulations on the Series A', tone: 'info',
     text: 'Kindly is the most exciting consumer company we\'ve seen this year. Our partner will join the board. Let\'s go build it.' },
-  { id: 'm_secondary', on: 'secondarySold', from: 'Northlight Capital', subject: 'Congratulations!', tone: 'info',
-    text: 'Delighted to see you take a little off the table, {name}. Founders who are comfortable make better long-term decisions. Enjoy it. You\'ve earned it.' },
+  { id: 'm_secondary_1', on: 'secondarySold_1', from: 'Northlight Capital', subject: 'Congratulations!', tone: 'info',
+    text: "Delighted to see you take a little off the table, {name}. Founders who are comfortable make better long-term decisions. Enjoy it. You've earned it." },
+  { id: 'm_secondary_2', on: 'secondarySold_2', from: 'Ironbridge Growth', subject: 'Liquidity', tone: 'info',
+    text: "Good to see you diversifying, {name}. Nobody should have their whole life in one company. Well, almost nobody. Your employees' options vest on the usual schedule." },
+  { id: 'm_secondary_3', on: 'secondarySold_3', from: 'Tallwater Crossover Fund', subject: 'Re: Your sale', tone: 'info',
+    text: "Transaction confirmed. We've noted it in our file on management alignment. Congratulations, {name}." },
 
   // ---------- Act 2: Monetize ----------
   { id: 'm_b', on: 'seriesB', from: 'The Board', subject: 'Path to revenue', tone: 'board',
